@@ -1,0 +1,52 @@
+{
+  "$schema": "env-manifest-v1",
+  "required": [
+    {
+      "name": "DATABASE_URL",
+      "usage": "PostgreSQL connection string",
+      "validation": "Must start with postgresql://",
+      "validatedInFile": "server/lib/env.ts",
+      "usedInFiles": ["server/db/index.ts"],
+      "whyRequired": "Core database connectivity required for all operations"
+    },
+    {
+      "name": "JWT_SECRET",
+      "usage": "JWT signing key for access/refresh tokens",
+      "validation": "Minimum 32 characters",
+      "validatedInFile": "server/lib/env.ts",
+      "usedInFiles": ["server/lib/auth.ts", "server/middleware/auth.ts"],
+      "whyRequired": "Authentication security - tokens must be cryptographically signed"
+    },
+    {
+      "name": "APP_URL",
+      "usage": "Canonical application URL for CORS origin and callback URLs",
+      "validation": "Must be a valid URL with scheme (e.g., https://app.example.com). No trailing slash.",
+      "validatedInFile": "server/lib/env.ts",
+      "usedInFiles": ["server/middleware/cors.ts", "server/lib/config.ts"],
+      "whyRequired": "CORS origin must be explicit in production - wildcard is forbidden"
+    }
+  ],
+  "conditionallyRequired": [
+    {
+      "name": "ENCRYPTION_KEY",
+      "condition": "Required when the application stores or processes sensitive/PII data that must be encrypted at rest. Omit entirely if no fields require encryption.",
+      "usage": "AES-256-GCM encryption for sensitive PII data fields (source data credentials, raw uploaded content, de-identification mapping tables)",
+      "validation": "Must be 32 bytes (64 hex chars)",
+      "validatedInFile": "server/lib/env.ts",
+      "usedInFiles": ["server/lib/encryption.ts", "server/services/dataSources.service.ts"],
+      "whyRequired": "Platform processes PII data that must be encrypted at rest per GDPR/SOC2 compliance requirements. Required for de-identification lineage tracking and source credential storage."
+    }
+  ],
+  "optional": [
+    {
+      "name": "PORT",
+      "default": "5000",
+      "usage": "Primary HTTP server listen port (externally-facing). Production: Express serves both SPA and API on this port (bound to 0.0.0.0). Development: When using dual-server setup (e.g., Vite frontend on 5000, Express backend on 3001), PORT is the frontend dev server port. Frontend proxies /api requests to backend Express server on 3001."
+    },
+    {
+      "name": "LOG_LEVEL",
+      "default": "info",
+      "usage": "Logging verbosity (debug, info, warn, error)"
+    }
+  ]
+}

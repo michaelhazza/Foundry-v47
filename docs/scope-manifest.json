@@ -1,0 +1,512 @@
+{
+  "$schema": "scope-manifest-v6",
+  "phase": "mvp",
+
+  "requiredEntities": [
+    "users",
+    "organisations",
+    "projects",
+    "dataSources",
+    "canonicalSchemas",
+    "processingPipelines",
+    "processingJobs",
+    "datasets",
+    "apiConnectors"
+  ],
+
+  "deferredEntities": [
+    {
+      "name": "webhooks",
+      "reason": "Phase 2: Automation triggers and event notifications deferred to expansion path"
+    },
+    {
+      "name": "enrichmentPlugins",
+      "reason": "Phase 2: Advanced processing capabilities (topic extraction, sentiment) deferred per expansion path"
+    },
+    {
+      "name": "connectorMarketplace",
+      "reason": "Phase 2: Self-service connector ecosystem deferred to platform growth phase"
+    },
+    {
+      "name": "cloudStorageDestinations",
+      "reason": "Phase 2: Push-to-destination integrations deferred per expansion path"
+    },
+    {
+      "name": "billingPlans",
+      "reason": "Phase 2: Usage-based billing deferred to platform growth phase"
+    }
+  ],
+
+  "scopeExceptions": [
+    {
+      "path": "/health",
+      "method": "GET",
+      "reason": "Framework health check endpoint - always present",
+      "category": "infrastructure"
+    },
+    {
+      "path": "/api/auth/session",
+      "method": "GET",
+      "reason": "Authentication session validation - framework standard",
+      "category": "infrastructure"
+    }
+  ],
+
+  "deferralDeclarations": {
+    "webhooks": {
+      "reason": "Phase 2: Automation triggers and event notifications deferred to expansion path",
+      "database": {
+        "table": "webhooks",
+        "schemaFile": "server/db/schema/webhooks.ts"
+      },
+      "api": {
+        "endpoints": [
+          {"method": "POST", "path": "/api/webhooks"},
+          {"method": "GET", "path": "/api/webhooks"},
+          {"method": "GET", "path": "/api/webhooks/:id"},
+          {"method": "PATCH", "path": "/api/webhooks/:id"},
+          {"method": "DELETE", "path": "/api/webhooks/:id"}
+        ],
+        "routeFile": "server/routes/webhooks.routes.ts"
+      },
+      "ui": {
+        "pages": [
+          {"path": "/webhooks", "componentFile": "client/src/pages/WebhooksPage.tsx"}
+        ]
+      },
+      "services": {
+        "files": ["server/services/webhooks.service.ts"]
+      }
+    },
+    "enrichmentPlugins": {
+      "reason": "Phase 2: Advanced processing capabilities deferred per expansion path",
+      "database": {
+        "table": "enrichment_plugins",
+        "schemaFile": "server/db/schema/enrichmentPlugins.ts"
+      },
+      "api": {
+        "endpoints": [
+          {"method": "POST", "path": "/api/enrichment-plugins"},
+          {"method": "GET", "path": "/api/enrichment-plugins"}
+        ],
+        "routeFile": "server/routes/enrichmentPlugins.routes.ts"
+      },
+      "ui": {
+        "pages": [
+          {"path": "/enrichment", "componentFile": "client/src/pages/EnrichmentPage.tsx"}
+        ]
+      },
+      "services": {
+        "files": ["server/services/enrichmentPlugins.service.ts"]
+      }
+    },
+    "connectorMarketplace": {
+      "reason": "Phase 2: Self-service connector ecosystem deferred to platform growth phase",
+      "database": {
+        "table": "connector_marketplace",
+        "schemaFile": "server/db/schema/connectorMarketplace.ts"
+      },
+      "api": {
+        "endpoints": [
+          {"method": "GET", "path": "/api/connector-marketplace"},
+          {"method": "POST", "path": "/api/connector-marketplace/install"}
+        ],
+        "routeFile": "server/routes/connectorMarketplace.routes.ts"
+      },
+      "ui": {
+        "pages": [
+          {"path": "/marketplace", "componentFile": "client/src/pages/MarketplacePage.tsx"}
+        ]
+      },
+      "services": {
+        "files": ["server/services/connectorMarketplace.service.ts"]
+      }
+    },
+    "cloudStorageDestinations": {
+      "reason": "Phase 2: Push-to-destination integrations deferred per expansion path",
+      "database": {
+        "table": "cloud_storage_destinations",
+        "schemaFile": "server/db/schema/cloudStorageDestinations.ts"
+      },
+      "api": {
+        "endpoints": [
+          {"method": "POST", "path": "/api/destinations"},
+          {"method": "GET", "path": "/api/destinations"}
+        ],
+        "routeFile": "server/routes/destinations.routes.ts"
+      },
+      "ui": {
+        "pages": [
+          {"path": "/destinations", "componentFile": "client/src/pages/DestinationsPage.tsx"}
+        ]
+      },
+      "services": {
+        "files": ["server/services/destinations.service.ts"]
+      }
+    },
+    "billingPlans": {
+      "reason": "Phase 2: Usage-based billing deferred to platform growth phase",
+      "database": {
+        "table": "billing_plans",
+        "schemaFile": "server/db/schema/billingPlans.ts"
+      },
+      "api": {
+        "endpoints": [
+          {"method": "GET", "path": "/api/billing"},
+          {"method": "POST", "path": "/api/billing/upgrade"}
+        ],
+        "routeFile": "server/routes/billing.routes.ts"
+      },
+      "ui": {
+        "pages": [
+          {"path": "/billing", "componentFile": "client/src/pages/BillingPage.tsx"}
+        ]
+      },
+      "services": {
+        "files": ["server/services/billing.service.ts"]
+      }
+    }
+  },
+
+  "entityContracts": {
+    "users": {
+      "purpose": "Authenticated individual within an organisation with role-based access",
+      "businessRules": [
+        "Users belong to exactly one organisation",
+        "Email must be unique across the platform",
+        "Password minimum 8 characters with complexity requirements",
+        "Invite-only registration during MVP phase"
+      ],
+      "relationships": [
+        {"entity": "organisations", "type": "belongs-to", "field": "organisationId"},
+        {"entity": "projects", "type": "has-many", "description": "Users create and manage projects within their organisation"}
+      ]
+    },
+    "organisations": {
+      "purpose": "Tenant container providing data isolation boundary for multi-tenant platform",
+      "businessRules": [
+        "Each organisation is fully isolated from all others",
+        "Organisation name must be unique",
+        "All data is scoped to organisationId",
+        "Organisation settings editable by admin users only"
+      ],
+      "relationships": [
+        {"entity": "users", "type": "has-many", "description": "Organisation contains multiple users"},
+        {"entity": "projects", "type": "has-many", "description": "Organisation contains multiple projects"},
+        {"entity": "dataSources", "type": "has-many", "description": "Organisation stores data sources"}
+      ]
+    },
+    "projects": {
+      "purpose": "Scoped AI initiative defining sources, processing rules, schemas, and output specifications",
+      "stateField": "status",
+      "states": ["draft", "configuring", "processing", "completed", "archived"],
+      "stateTransitions": [
+        {"from": "draft", "to": "configuring", "trigger": "User adds first data source"},
+        {"from": "configuring", "to": "processing", "trigger": "User triggers processing job"},
+        {"from": "processing", "to": "completed", "trigger": "First processing job succeeds"},
+        {"from": "completed", "to": "processing", "trigger": "User triggers re-run or adds new source"},
+        {"from": "completed", "to": "archived", "trigger": "User archives project"},
+        {"from": "archived", "to": "configuring", "trigger": "User reactivates project"}
+      ],
+      "businessRules": [
+        "Projects belong to exactly one organisation",
+        "Multiple projects can use overlapping data sources",
+        "Processing rules are project-specific even when using same source",
+        "Each project selects which canonical schema to target",
+        "Field mapping and de-identification rules configured per project",
+        "Projects can be re-run to regenerate datasets as source data changes"
+      ],
+      "relationships": [
+        {"entity": "organisations", "type": "belongs-to", "field": "organisationId"},
+        {"entity": "dataSources", "type": "many-to-many", "description": "Projects draw from one or many reusable sources"},
+        {"entity": "canonicalSchemas", "type": "belongs-to", "field": "canonicalSchemaId"},
+        {"entity": "processingPipelines", "type": "belongs-to", "field": "processingPipelineId"},
+        {"entity": "processingJobs", "type": "has-many", "description": "Projects have multiple processing runs"},
+        {"entity": "datasets", "type": "has-many", "description": "Projects produce output datasets"}
+      ]
+    },
+    "dataSources": {
+      "purpose": "Origin of raw business data that can be processed into AI-ready outputs",
+      "stateField": "status",
+      "states": ["uploaded", "validating", "ready", "expired", "error"],
+      "stateTransitions": [
+        {"from": "uploaded", "to": "validating", "trigger": "File upload completes or API connection established"},
+        {"from": "validating", "to": "ready", "trigger": "Format validation passes"},
+        {"from": "validating", "to": "error", "trigger": "Format validation fails"},
+        {"from": "ready", "to": "expired", "trigger": "30-day retention window expires"}
+      ],
+      "businessRules": [
+        "Sources belong to exactly one organisation",
+        "Sources are reusable across multiple projects within same organisation",
+        "File uploads support CSV, Excel, JSON formats",
+        "API connectors require authentication credentials",
+        "Source data cached for 30 days then purged",
+        "Maximum 100000 records per processing job enforced at validation",
+        "Column detection and type inference automatic on file upload",
+        "Teamwork Desk connector mandatory for MVP",
+        "GoHighLevel connector post-MVP"
+      ],
+      "relationships": [
+        {"entity": "organisations", "type": "belongs-to", "field": "organisationId"},
+        {"entity": "projects", "type": "many-to-many", "description": "Sources reusable across multiple projects"},
+        {"entity": "apiConnectors", "type": "belongs-to", "field": "apiConnectorId"}
+      ]
+    },
+    "canonicalSchemas": {
+      "purpose": "Reusable output structure definitions that normalise heterogeneous sources into consistent formats",
+      "businessRules": [
+        "Schemas are platform-level resources not organisation-scoped",
+        "Schemas are versioned and immutable once published",
+        "Multiple sources can map to the same schema",
+        "Schemas define required fields, optional fields, and data types",
+        "Pre-built schemas for conversations, knowledge documents, decision records",
+        "Projects select one canonical schema as output target"
+      ],
+      "relationships": [
+        {"entity": "projects", "type": "has-many", "description": "Schemas reused across projects"}
+      ]
+    },
+    "processingPipelines": {
+      "purpose": "Ordered sequence of transformation stages applied to raw data to produce AI-ready outputs",
+      "businessRules": [
+        "Pipelines are platform-level resources not organisation-scoped",
+        "Pipelines define ordered stages: ingestion, normalisation, de-identification, filtering, output formatting",
+        "Each project configures pipeline parameters but uses standard stage sequence",
+        "Pipelines are modular and reusable across projects",
+        "Stage configuration stored per-project not per-pipeline"
+      ],
+      "relationships": [
+        {"entity": "projects", "type": "has-many", "description": "Pipelines reused across projects"}
+      ]
+    },
+    "processingJobs": {
+      "purpose": "Execution instance of a pipeline processing data sources into datasets",
+      "stateField": "status",
+      "states": ["queued", "running", "completed", "failed"],
+      "stateTransitions": [
+        {"from": "queued", "to": "running", "trigger": "Worker picks up job from queue"},
+        {"from": "running", "to": "completed", "trigger": "All pipeline stages succeed"},
+        {"from": "running", "to": "failed", "trigger": "Any pipeline stage fails"}
+      ],
+      "businessRules": [
+        "Jobs belong to exactly one project",
+        "Jobs reference one or more data sources",
+        "Manual batch processing only in MVP - no scheduled or automatic triggers",
+        "Jobs can be re-run to regenerate datasets",
+        "Failed jobs retain error details for user diagnosis",
+        "Job logs track which pipeline stages executed and their outcomes",
+        "Jobs do not produce partial datasets on failure"
+      ],
+      "relationships": [
+        {"entity": "projects", "type": "belongs-to", "field": "projectId"},
+        {"entity": "dataSources", "type": "many-to-many", "description": "Jobs process one or many sources"},
+        {"entity": "datasets", "type": "has-many", "description": "Successful jobs produce datasets"}
+      ]
+    },
+    "datasets": {
+      "purpose": "AI-ready structured output produced by successful processing job execution",
+      "businessRules": [
+        "Datasets belong to exactly one project",
+        "Datasets produced only by successfully completed processing jobs",
+        "Retained until user explicitly deletes",
+        "Each dataset includes traceable lineage of source data and transformations applied",
+        "Download-only export in MVP - no push to external destinations",
+        "Supported formats: Conversational JSONL, Q&A pairs, structured JSON",
+        "Datasets can be regenerated from same sources with manual re-run",
+        "Previous dataset versions retained when regenerated"
+      ],
+      "relationships": [
+        {"entity": "projects", "type": "belongs-to", "field": "projectId"},
+        {"entity": "processingJobs", "type": "belongs-to", "field": "processingJobId"}
+      ],
+      "outputLifecycle": {
+        "regenerationAllowed": true,
+        "regenerationTrigger": "manualOnly",
+        "regenerationOnSourceChange": false,
+        "previousVersionsRetained": true,
+        "lineagePreserved": true
+      }
+    },
+    "apiConnectors": {
+      "purpose": "Integration definitions for external platforms that provide data sources",
+      "businessRules": [
+        "Connectors are platform-level resources not organisation-scoped",
+        "Each connector defines authentication method and data extraction logic",
+        "Teamwork Desk connector required for MVP launch",
+        "GoHighLevel connector post-MVP",
+        "Future connectors: Zendesk, Freshdesk, Intercom, HubSpot, Salesforce, Notion, Slack",
+        "Connector authentication credentials stored per organisation"
+      ],
+      "relationships": [
+        {"entity": "dataSources", "type": "has-many", "description": "Connectors enable creation of API-backed sources"}
+      ]
+    }
+  },
+
+  "platformConstraints": {
+    "multiTenancy": {
+      "model": "organisation-isolated",
+      "isolationField": "organisationId",
+      "rule": "Data is never shared across organisations. Every tenant-scoped query must filter by organisationId.",
+      "tenantContainer": {
+        "entity": "organisations",
+        "uiStrategy": "settingsEmbedded",
+        "allowedMutations": ["rename", "viewDetails"],
+        "notes": "No organisation switching in MVP - users belong to single organisation. Organisation profile editable within Settings page."
+      }
+    },
+    "limits": [
+      {
+        "name": "maxRecordsPerProject",
+        "value": 100000,
+        "enforcement": "Reject processing job at validation if source record count exceeds limit"
+      },
+      {
+        "name": "maxFileUploadSize",
+        "value": 104857600,
+        "enforcement": "Reject file upload if size exceeds 100MB"
+      }
+    ],
+    "retention": [
+      {
+        "scope": "sourceData",
+        "duration": "30 days",
+        "rule": "Source data cached for 30 days after upload or last access, then purged"
+      },
+      {
+        "scope": "processedDatasets",
+        "duration": "until-deleted",
+        "rule": "Processed datasets retained indefinitely until user explicitly deletes them"
+      }
+    ],
+    "supportedInputFormats": [
+      {"mime": "text/csv", "label": "CSV", "mvp": true},
+      {"mime": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "label": "Excel", "mvp": true},
+      {"mime": "application/json", "label": "JSON", "mvp": true}
+    ],
+    "supportedOutputFormats": [
+      {"mime": "application/jsonl", "label": "Conversational JSONL", "mvp": true},
+      {"mime": "application/json", "label": "Structured JSON", "mvp": true},
+      {"mime": "application/json", "label": "Q&A Pairs JSON", "mvp": false}
+    ],
+    "exportMethod": "download-only",
+    "configurationModel": {
+      "approach": "ui-driven",
+      "noUserAuthoredCode": true,
+      "noCustomPerProjectCodePaths": true
+    },
+    "dataSensitivity": {
+      "sensitiveDataClasses": ["PII", "customerIdentifiers", "internalIdentifiers", "commercialSensitive", "regulatedData"],
+      "allowedActions": ["mask", "hash", "redact", "tokenise", "drop"],
+      "reversibility": "irreversible",
+      "lineageRequired": true,
+      "complianceFrameworks": ["GDPR", "SOC2"]
+    }
+  },
+
+  "userRoles": [
+    {
+      "role": "admin",
+      "description": "Organisation administrator with full access to all resources and user management",
+      "capabilities": [
+        "manage-users",
+        "manage-organisation",
+        "manage-projects",
+        "manage-sources",
+        "manage-schemas",
+        "manage-pipelines",
+        "process-data",
+        "export-datasets",
+        "invite-users",
+        "manage-api-connectors"
+      ]
+    },
+    {
+      "role": "member",
+      "description": "Standard organisation member with project and data management access",
+      "capabilities": [
+        "manage-projects",
+        "manage-sources",
+        "process-data",
+        "export-datasets",
+        "view-organisation"
+      ]
+    }
+  ],
+
+  "onboarding": {
+    "model": "invite-only",
+    "firstRunFlow": [
+      {"step": 1, "action": "Create first project", "page": "new-project"},
+      {"step": 2, "action": "Upload sample file or connect API source", "page": "project-sources"},
+      {"step": 3, "action": "Automatic column detection and schema suggestions", "page": "source-mapping"},
+      {"step": 4, "action": "Configure de-identification rules with preview", "page": "source-preview"},
+      {"step": 5, "action": "Trigger processing job", "page": "project-processing"},
+      {"step": 6, "action": "Download AI-ready output dataset", "page": "dataset-export"}
+    ],
+    "successCriteria": "A non-technical user can generate clean, de-identified, structured AI-ready data without documentation or support",
+    "targetTime": "under 5 minutes from first upload to downloadable output"
+  },
+
+  "explicitNonGoals": [
+    "modelTrainingOrInference",
+    "longTermSystemOfRecord",
+    "manualAnnotationWorkflows",
+    "sourceSystemReplacement",
+    "realTimeStreamingProcessing"
+  ],
+
+  "architecturalInvariants": [
+    {
+      "name": "sourceAgnosticProcessing",
+      "rule": "All data sources pass through identical pipeline stages regardless of origin type"
+    },
+    {
+      "name": "schemaFirstNormalisation",
+      "rule": "Output structure determined by canonical schemas, not source structure"
+    },
+    {
+      "name": "configurationOverCode",
+      "rule": "All project behaviour defined through UI configuration, not user-authored code"
+    },
+    {
+      "name": "privacyByDesign",
+      "rule": "De-identification is mandatory first-class feature, not optional add-on"
+    }
+  ],
+
+  "productIntent": {
+    "primaryUserProfile": "nonTechnicalBusinessUser",
+    "ahaMoment": "Clean, de-identified, structured output from first file upload in under 5 minutes",
+    "maxTimeToValueMinutes": 5,
+    "documentationDependency": "none"
+  },
+
+  "supportedUseCases": [
+    "customerSupportAgentEnablement",
+    "salesAgentCoaching",
+    "internalKnowledgeRAG",
+    "evaluationAndTestingDatasets",
+    "operationalIntelligenceExtraction"
+  ],
+
+  "excludedProcessingStages": [
+    "sentimentScoring",
+    "topicExtraction",
+    "autoCategorisation",
+    "vectorEmbeddingGeneration",
+    "entityRecognition",
+    "languageTranslation"
+  ],
+
+  "failureHandlingPrinciples": {
+    "partialOutputsAllowed": false,
+    "failedJobsProduceDatasets": false,
+    "errorsExposedToUser": true
+  },
+
+  "performanceIntent": {
+    "mvpOptimisedFor": "clarity-over-throughput",
+    "noRealTimeGuarantees": true
+  }
+}

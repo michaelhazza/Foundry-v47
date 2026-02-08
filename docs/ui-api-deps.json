@@ -1,0 +1,532 @@
+{
+  "$schema": "ui-api-deps-v2",
+  "totalPages": 16,
+  "canonicalPaths": {
+    "apiClient": "client/src/lib/api.ts",
+    "errorBoundary": "client/src/lib/ErrorBoundary.tsx",
+    "appComponent": "client/src/App.tsx"
+  },
+  "pages": [
+    {
+      "filePath": "client/src/pages/LoginPage.tsx",
+      "routePath": "/login",
+      "scope": "required",
+      "authenticated": false,
+      "apiCalls": [
+        {
+          "method": "POST",
+          "path": "/api/auth/login",
+          "required": true,
+          "authRequired": false
+        }
+      ]
+    },
+    {
+      "filePath": "client/src/pages/DashboardPage.tsx",
+      "routePath": "/",
+      "scope": "required",
+      "authenticated": true,
+      "notes": "Landing page showing project overview and quick access to key workflows",
+      "apiCalls": [
+        {
+          "method": "GET",
+          "path": "/api/auth/session",
+          "required": true,
+          "authRequired": true
+        },
+        {
+          "method": "GET",
+          "path": "/api/projects",
+          "required": true,
+          "authRequired": true,
+          "queryParams": ["status", "limit"]
+        }
+      ]
+    },
+    {
+      "filePath": "client/src/pages/ProjectsPage.tsx",
+      "routePath": "/projects",
+      "scope": "required",
+      "authenticated": true,
+      "notes": "manage-projects capability served here via full CRUD operations",
+      "apiCalls": [
+        {
+          "method": "GET",
+          "path": "/api/projects",
+          "required": true,
+          "authRequired": true,
+          "queryParams": ["status", "orderBy"]
+        },
+        {
+          "method": "POST",
+          "path": "/api/projects",
+          "required": true,
+          "authRequired": true
+        },
+        {
+          "method": "DELETE",
+          "path": "/api/projects/:id",
+          "required": true,
+          "authRequired": true,
+          "paramSource": {"id": "selected project row"}
+        }
+      ]
+    },
+    {
+      "filePath": "client/src/pages/ProjectPage.tsx",
+      "routePath": "/projects/:projectId",
+      "scope": "required",
+      "authenticated": true,
+      "apiCalls": [
+        {
+          "method": "GET",
+          "path": "/api/projects/:projectId",
+          "required": true,
+          "authRequired": true
+        },
+        {
+          "method": "PATCH",
+          "path": "/api/projects/:projectId",
+          "required": true,
+          "authRequired": true
+        },
+        {
+          "method": "GET",
+          "path": "/api/projects/:projectId/data-sources",
+          "required": true,
+          "authRequired": true
+        },
+        {
+          "method": "GET",
+          "path": "/api/projects/:projectId/processing-jobs",
+          "required": true,
+          "authRequired": true,
+          "queryParams": ["status", "orderBy"]
+        },
+        {
+          "method": "GET",
+          "path": "/api/projects/:projectId/datasets",
+          "required": true,
+          "authRequired": true
+        }
+      ]
+    },
+    {
+      "filePath": "client/src/pages/NewProjectPage.tsx",
+      "routePath": "/projects/new",
+      "scope": "required",
+      "authenticated": true,
+      "notes": "First step in onboarding flow - create first project",
+      "apiCalls": [
+        {
+          "method": "POST",
+          "path": "/api/projects",
+          "required": true,
+          "authRequired": true
+        },
+        {
+          "method": "GET",
+          "path": "/api/canonical-schemas",
+          "required": true,
+          "authRequired": true,
+          "notes": "Platform-level resource for schema selection during project creation"
+        }
+      ]
+    },
+    {
+      "filePath": "client/src/pages/ProjectSourcesPage.tsx",
+      "routePath": "/projects/:projectId/sources",
+      "scope": "required",
+      "authenticated": true,
+      "notes": "Second step in onboarding flow - upload sample file or connect API source. manage-sources capability served here.",
+      "apiCalls": [
+        {
+          "method": "GET",
+          "path": "/api/projects/:projectId/data-sources",
+          "required": true,
+          "authRequired": true
+        },
+        {
+          "method": "POST",
+          "path": "/api/projects/:projectId/data-sources",
+          "required": true,
+          "authRequired": true
+        },
+        {
+          "method": "DELETE",
+          "path": "/api/projects/:projectId/data-sources/:id",
+          "required": true,
+          "authRequired": true,
+          "paramSource": {"id": "selected data source row"}
+        },
+        {
+          "method": "GET",
+          "path": "/api/data-sources",
+          "required": true,
+          "authRequired": true
+        },
+        {
+          "method": "POST",
+          "path": "/api/data-sources",
+          "required": true,
+          "authRequired": true
+        },
+        {
+          "method": "GET",
+          "path": "/api/api-connectors",
+          "required": true,
+          "authRequired": true,
+          "notes": "Platform-level resource for API connector selection"
+        }
+      ]
+    },
+    {
+      "filePath": "client/src/pages/SourceMappingPage.tsx",
+      "routePath": "/projects/:projectId/sources/:dataSourceId/mapping",
+      "scope": "required",
+      "authenticated": true,
+      "notes": "Third step in onboarding flow - automatic column detection and schema suggestions. manage-schemas capability served here.",
+      "apiCalls": [
+        {
+          "method": "GET",
+          "path": "/api/data-sources/:dataSourceId",
+          "required": true,
+          "authRequired": true
+        },
+        {
+          "method": "GET",
+          "path": "/api/data-sources/:dataSourceId/preview",
+          "required": true,
+          "authRequired": true,
+          "queryParams": ["rows", "columns"]
+        },
+        {
+          "method": "GET",
+          "path": "/api/canonical-schemas",
+          "required": true,
+          "authRequired": true,
+          "notes": "Platform-level resource for schema mapping"
+        },
+        {
+          "method": "GET",
+          "path": "/api/canonical-schemas/:id",
+          "required": true,
+          "authRequired": true,
+          "paramSource": {"id": "selected schema from dropdown"}
+        },
+        {
+          "method": "PATCH",
+          "path": "/api/data-sources/:dataSourceId",
+          "required": true,
+          "authRequired": true
+        }
+      ]
+    },
+    {
+      "filePath": "client/src/pages/SourcePreviewPage.tsx",
+      "routePath": "/projects/:projectId/sources/:dataSourceId/preview",
+      "scope": "required",
+      "authenticated": true,
+      "notes": "Fourth step in onboarding flow - configure de-identification rules with preview",
+      "apiCalls": [
+        {
+          "method": "GET",
+          "path": "/api/data-sources/:dataSourceId",
+          "required": true,
+          "authRequired": true
+        },
+        {
+          "method": "GET",
+          "path": "/api/data-sources/:dataSourceId/preview",
+          "required": true,
+          "authRequired": true,
+          "queryParams": ["deIdentificationConfig", "rows"]
+        },
+        {
+          "method": "PATCH",
+          "path": "/api/data-sources/:dataSourceId",
+          "required": true,
+          "authRequired": true
+        }
+      ]
+    },
+    {
+      "filePath": "client/src/pages/ProjectProcessingPage.tsx",
+      "routePath": "/projects/:projectId/processing",
+      "scope": "required",
+      "authenticated": true,
+      "notes": "Fifth step in onboarding flow - trigger processing job. manage-pipelines and process-data capabilities served here.",
+      "apiCalls": [
+        {
+          "method": "GET",
+          "path": "/api/projects/:projectId/processing-jobs",
+          "required": true,
+          "authRequired": true,
+          "queryParams": ["status", "orderBy"]
+        },
+        {
+          "method": "POST",
+          "path": "/api/projects/:projectId/processing-jobs",
+          "required": true,
+          "authRequired": true
+        },
+        {
+          "method": "GET",
+          "path": "/api/projects/:projectId/processing-jobs/:id",
+          "required": true,
+          "authRequired": true,
+          "paramSource": {"id": "selected processing job row"}
+        },
+        {
+          "method": "GET",
+          "path": "/api/processing-pipelines",
+          "required": true,
+          "authRequired": true,
+          "notes": "Platform-level resource for pipeline selection"
+        }
+      ]
+    },
+    {
+      "filePath": "client/src/pages/DatasetExportPage.tsx",
+      "routePath": "/projects/:projectId/datasets",
+      "scope": "required",
+      "authenticated": true,
+      "notes": "Sixth step in onboarding flow - download AI-ready output dataset. export-datasets capability served here.",
+      "apiCalls": [
+        {
+          "method": "GET",
+          "path": "/api/projects/:projectId/datasets",
+          "required": true,
+          "authRequired": true
+        },
+        {
+          "method": "GET",
+          "path": "/api/projects/:projectId/datasets/:id",
+          "required": true,
+          "authRequired": true,
+          "paramSource": {"id": "selected dataset row"}
+        },
+        {
+          "method": "GET",
+          "path": "/api/projects/:projectId/datasets/:id/download",
+          "required": true,
+          "authRequired": true,
+          "paramSource": {"id": "selected dataset row"},
+          "queryParams": ["format"]
+        },
+        {
+          "method": "DELETE",
+          "path": "/api/projects/:projectId/datasets/:id",
+          "required": true,
+          "authRequired": true,
+          "paramSource": {"id": "selected dataset row"}
+        }
+      ]
+    },
+    {
+      "filePath": "client/src/pages/DataSourcesPage.tsx",
+      "routePath": "/data-sources",
+      "scope": "required",
+      "authenticated": true,
+      "notes": "Organization-wide data source management. manage-sources capability served here.",
+      "apiCalls": [
+        {
+          "method": "GET",
+          "path": "/api/data-sources",
+          "required": true,
+          "authRequired": true,
+          "queryParams": ["type", "status"]
+        },
+        {
+          "method": "POST",
+          "path": "/api/data-sources",
+          "required": true,
+          "authRequired": true
+        },
+        {
+          "method": "GET",
+          "path": "/api/data-sources/:id",
+          "required": true,
+          "authRequired": true,
+          "paramSource": {"id": "selected data source row"}
+        },
+        {
+          "method": "PATCH",
+          "path": "/api/data-sources/:id",
+          "required": true,
+          "authRequired": true,
+          "paramSource": {"id": "selected data source row"}
+        },
+        {
+          "method": "DELETE",
+          "path": "/api/data-sources/:id",
+          "required": true,
+          "authRequired": true,
+          "paramSource": {"id": "selected data source row"}
+        }
+      ]
+    },
+    {
+      "filePath": "client/src/pages/NewDataSourcePage.tsx",
+      "routePath": "/data-sources/new",
+      "scope": "required",
+      "authenticated": true,
+      "apiCalls": [
+        {
+          "method": "POST",
+          "path": "/api/data-sources",
+          "required": true,
+          "authRequired": true
+        },
+        {
+          "method": "GET",
+          "path": "/api/api-connectors",
+          "required": true,
+          "authRequired": true,
+          "notes": "Platform-level resource for connector selection"
+        },
+        {
+          "method": "GET",
+          "path": "/api/api-connectors/:id",
+          "required": true,
+          "authRequired": true,
+          "paramSource": {"id": "selected connector option"},
+          "notes": "Platform-level resource details"
+        }
+      ]
+    },
+    {
+      "filePath": "client/src/pages/SchemasPage.tsx",
+      "routePath": "/schemas",
+      "scope": "required",
+      "authenticated": true,
+      "notes": "manage-schemas capability served here via schema viewing and selection",
+      "apiCalls": [
+        {
+          "method": "GET",
+          "path": "/api/canonical-schemas",
+          "required": true,
+          "authRequired": true,
+          "notes": "Platform-level resource listing"
+        },
+        {
+          "method": "GET",
+          "path": "/api/canonical-schemas/:id",
+          "required": true,
+          "authRequired": true,
+          "paramSource": {"id": "selected schema row"},
+          "notes": "Platform-level resource details"
+        }
+      ]
+    },
+    {
+      "filePath": "client/src/pages/ConnectorsPage.tsx",
+      "routePath": "/connectors",
+      "scope": "required",
+      "authenticated": true,
+      "notes": "manage-api-connectors capability served here via connector viewing and configuration",
+      "apiCalls": [
+        {
+          "method": "GET",
+          "path": "/api/api-connectors",
+          "required": true,
+          "authRequired": true,
+          "notes": "Platform-level resource listing"
+        },
+        {
+          "method": "GET",
+          "path": "/api/api-connectors/:id",
+          "required": true,
+          "authRequired": true,
+          "paramSource": {"id": "selected connector row"},
+          "notes": "Platform-level resource details"
+        }
+      ]
+    },
+    {
+      "filePath": "client/src/pages/UsersPage.tsx",
+      "routePath": "/admin/users",
+      "scope": "required",
+      "authenticated": true,
+      "notes": "Admin-only user management page. manage-users and invite-users capabilities served here.",
+      "apiCalls": [
+        {
+          "method": "GET",
+          "path": "/api/users",
+          "required": true,
+          "authRequired": true,
+          "requiredRole": "admin",
+          "queryParams": ["role", "status"]
+        },
+        {
+          "method": "GET",
+          "path": "/api/users/:id",
+          "required": true,
+          "authRequired": true,
+          "requiredRole": "admin",
+          "paramSource": {"id": "selected user row"}
+        },
+        {
+          "method": "POST",
+          "path": "/api/users",
+          "required": true,
+          "authRequired": true,
+          "requiredRole": "admin"
+        },
+        {
+          "method": "PATCH",
+          "path": "/api/users/:id",
+          "required": true,
+          "authRequired": true,
+          "requiredRole": "admin",
+          "paramSource": {"id": "selected user row"}
+        },
+        {
+          "method": "DELETE",
+          "path": "/api/users/:id",
+          "required": true,
+          "authRequired": true,
+          "requiredRole": "admin",
+          "paramSource": {"id": "selected user row"}
+        }
+      ]
+    },
+    {
+      "filePath": "client/src/pages/SettingsPage.tsx",
+      "routePath": "/settings",
+      "scope": "required",
+      "authenticated": true,
+      "notes": "User profile and organization management. manage-organisation capability served here via GET/PATCH /api/organisations/me per settingsEmbedded tenant container strategy. view-organisation capability also served here.",
+      "apiCalls": [
+        {
+          "method": "GET",
+          "path": "/api/auth/session",
+          "required": true,
+          "authRequired": true
+        },
+        {
+          "method": "PATCH",
+          "path": "/api/users/:id",
+          "required": true,
+          "authRequired": true,
+          "dependsOn": "/api/auth/session",
+          "notes": "User ID parameter sourced from session response"
+        },
+        {
+          "method": "GET",
+          "path": "/api/organisations/me",
+          "required": true,
+          "authRequired": true
+        },
+        {
+          "method": "PATCH",
+          "path": "/api/organisations/me",
+          "required": true,
+          "authRequired": true,
+          "requiredRole": "admin",
+          "notes": "Admin-only organisation name editing per scope manifest business rules"
+        }
+      ]
+    }
+  ]
+}
