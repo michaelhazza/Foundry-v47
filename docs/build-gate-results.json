@@ -1,13 +1,1380 @@
 {
   "$schema": "build-gate-results-v1",
-  "buildId": "GENERATED_AT_RUNTIME",
-  "startTime": "GENERATED_AT_RUNTIME",
-  "endTime": "GENERATED_AT_RUNTIME",
+  "buildId": "build-20260208-085935",
+  "startTime": "2026-02-08T08:59:35Z",
+  "gates": [
+    {
+      "gate": "preflight-artifacts",
+      "status": "passed",
+      "output": "=== verify-preflight-artifacts ===\n[OK] docs/scope-manifest.json exists\n[OK] docs/env-manifest.json exists\n[OK] docs/data-relationships.json exists\n[OK] docs/service-contracts.json exists\n[OK] docs/ui-api-deps.json exists\n[OK] docs/gate-scripts-reference.md exists\n[OK] All required specification artifacts present"
+    }
+,
+    {
+      "gate": "no-forbidden-artifacts",
+      "status": "passed",
+      "output": "=== verify-no-forbidden-artifacts ===\n[OK] No forbidden artifacts found"
+    }
+,
+    {
+      "gate": "spec-size-budget",
+      "status": "passed",
+      "output": "=== verify-spec-size-budget ===\n[OK] docs/build-gate-results.json: 0KB\n[OK] docs/data-relationships.json: 24KB\n[OK] docs/env-manifest.json: 2KB\n[OK] docs/scope-manifest.json: 19KB\n[OK] docs/service-contracts.json: 43KB\n[OK] docs/ui-api-deps.json: 17KB\n[OK] All specification files within size budget"
+    }
+,
+    {
+      "gate": "no-placeholders",
+      "status": "passed",
+      "output": "=== verify-no-placeholders ===\n[OK] No placeholder patterns found in source code"
+    }
+,
+    {
+      "gate": "env-var-usage-proof",
+      "status": "failed",
+      "output": "=== verify-env-var-usage-proof ===\nChecking 6 environment variables for usage proof..."
+    }
+,
+    {
+      "gate": "multi-tenant-isolation",
+      "status": "passed",
+      "output": "=== verify-multi-tenant-isolation ===\nChecking tenant isolation field: organisationId\nFound tenant-scoped entities:\n  - users\n  - projects\n  - dataSources\n/home/user/Foundry-v47/scripts/verify-multi-tenant-isolation.sh: line 44: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] users has organisationId column\n/home/user/Foundry-v47/scripts/verify-multi-tenant-isolation.sh: line 44: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] projects has organisationId column\n/home/user/Foundry-v47/scripts/verify-multi-tenant-isolation.sh: line 44: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] dataSources has organisationId column"
+    }
+,
+    {
+      "gate": "scope-invariants",
+      "status": "passed",
+      "output": "=== verify-scope-invariants ===\n[OK] Phase: mvp\n[OK] requiredEntities array present\n[OK] platformConstraints present"
+    }
+,
+    {
+      "gate": "complete-deferrals",
+      "status": "failed",
+      "output": "=== verify-complete-deferrals ==="
+    }
+,
+    {
+      "gate": "env-manifest-schema",
+      "status": "passed",
+      "output": "=== verify-env-manifest-schema ===\n[OK] Schema version present\n[OK] required array present\nValidating 6 environment variable entries...\n[OK] DATABASE_URL has required fields\n[OK] JWT_SECRET has required fields\n[OK] APP_URL has required fields\n/home/user/Foundry-v47/scripts/verify-env-manifest-schema.sh: line 47: [[: 0\n0: syntax error in expression (error token is \"0\")\n/home/user/Foundry-v47/scripts/verify-env-manifest-schema.sh: line 52: [[: 0\n0: syntax error in expression (error token is \"0\")\n/home/user/Foundry-v47/scripts/verify-env-manifest-schema.sh: line 47: [[: 0\n0: syntax error in expression (error token is \"0\")\n/home/user/Foundry-v47/scripts/verify-env-manifest-schema.sh: line 52: [[: 0\n0: syntax error in expression (error token is \"0\")\n/home/user/Foundry-v47/scripts/verify-env-manifest-schema.sh: line 47: [[: 0\n0: syntax error in expression (error token is \"0\")\n/home/user/Foundry-v47/scripts/verify-env-manifest-schema.sh: line 52: [[: 0\n0: syntax error in expression (error token is \"0\")"
+    }
+,
+    {
+      "gate": "config-files-required",
+      "status": "failed",
+      "output": "=== verify-config-files-required ===\n[OK] .env.example exists\n[OK] package.json exists\nVerifying .env.example contains 6 variables...\n[OK] DATABASE_URL in .env.example\n[OK] JWT_SECRET in .env.example\n[OK] APP_URL in .env.example\n[X] FAIL: ENCRYPTION_KEY not found in .env.example\n[OK] PORT in .env.example\n[OK] LOG_LEVEL in .env.example"
+    }
+,
+    {
+      "gate": "health-db-connectivity",
+      "status": "failed",
+      "output": "=== verify-health-db-connectivity ===\n/home/user/Foundry-v47/scripts/verify-health-db-connectivity.sh: line 16: [[: 0\n0: syntax error in expression (error token is \"0\")\n/home/user/Foundry-v47/scripts/verify-health-db-connectivity.sh: line 22: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] Health check endpoint found"
+    }
+,
+    {
+      "gate": "no-wildcard-cors",
+      "status": "passed",
+      "output": "=== verify-no-wildcard-cors ===\nScanning server for wildcard CORS...\n[OK] No wildcard CORS found"
+    }
+,
+    {
+      "gate": "encryption-binary",
+      "status": "passed",
+      "output": "=== verify-encryption-binary ===\n/home/user/Foundry-v47/scripts/verify-encryption-binary.sh: line 16: [[: 0\n0: syntax error in expression (error token is \"0\")\nFound 0\n0 PII columns requiring encryption\n[OK] Encryption utility found: server/lib/encryption.ts"
+    }
+,
+    {
+      "gate": "cascade-completeness",
+      "status": "passed",
+      "output": "=== verify-cascade-completeness ===\nChecking cascade rules for foreign key relationships...\nFound 24 foreign key relationships\n/home/user/Foundry-v47/scripts/verify-cascade-completeness.sh: line 32: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] All 24 foreign keys have cascade rules"
+    }
+,
+    {
+      "gate": "project-scope-strategy",
+      "status": "passed",
+      "output": "=== verify-project-scope-strategy ===\nFound indirect-tenant entities:\n  - processingJobs\n  - datasets\n  - projectDataSources\n  - processingJobDataSources\n[OK] processingJobs: projectScopeStrategy = projectIdColumn\n[OK] datasets: projectScopeStrategy = projectIdColumn\n[OK] projectDataSources: projectScopeStrategy = projectIdColumn\n[OK] processingJobDataSources: projectScopeStrategy = joinPath"
+    }
+,
+    {
+      "gate": "index-strategy",
+      "status": "failed",
+      "output": "=== verify-index-strategy ===\nChecking index strategy for soft-delete tables..."
+    }
+,
+    {
+      "gate": "schema-imports",
+      "status": "failed",
+      "output": "=== verify-schema-imports ==="
+    }
+,
+    {
+      "gate": "body-validation",
+      "status": "failed",
+      "output": "=== verify-body-validation ==="
+    }
+,
+    {
+      "gate": "upload-config-sourced",
+      "status": "passed",
+      "output": "=== verify-upload-config-sourced ===\n/home/user/Foundry-v47/scripts/verify-upload-config-sourced.sh: line 17: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] Upload size limit defined: 104857600 bytes"
+    }
+,
+    {
+      "gate": "organisation-endpoint-naming",
+      "status": "passed",
+      "output": "=== verify-organisation-endpoint-naming ===\nChecking organisation endpoint naming...\n[OK] Current organisation endpoint uses /me pattern"
+    }
+,
+    {
+      "gate": "mvp-scope-boundaries",
+      "status": "failed",
+      "output": "=== verify-mvp-scope-boundaries ==="
+    }
+,
+    {
+      "gate": "token-scoped-routing",
+      "status": "failed",
+      "output": "=== verify-token-scoped-routing ==="
+    }
+,
+    {
+      "gate": "error-handlers",
+      "status": "passed",
+      "output": "=== verify-error-handlers ===\nChecking Express entry file: server/index.ts\n[OK] JSON body parser found\n[OK] Global error handler found\n[OK] Error handler verification passed"
+    }
+,
+    {
+      "gate": "endpoint-status-health",
+      "status": "passed",
+      "output": "/home/user/Foundry-v47/scripts/verify-endpoint-status.sh: line 23: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] /health has status code documentation"
+    }
+,
+    {
+      "gate": "route-service-alignment-health",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "pagination-max-health",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "status-enums-health",
+      "status": "passed",
+      "output": "[OK] /health status field present (enum validation deferred to implementation)"
+    }
+,
+    {
+      "gate": "endpoint-status-api-auth-session",
+      "status": "passed",
+      "output": "/home/user/Foundry-v47/scripts/verify-endpoint-status.sh: line 23: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] /api/auth/session has status code documentation"
+    }
+,
+    {
+      "gate": "route-service-alignment-api-auth-session",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "pagination-max-api-auth-session",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "status-enums-api-auth-session",
+      "status": "passed",
+      "output": "[OK] /api/auth/session status field present (enum validation deferred to implementation)"
+    }
+,
+    {
+      "gate": "endpoint-status-api-auth-login",
+      "status": "passed",
+      "output": "/home/user/Foundry-v47/scripts/verify-endpoint-status.sh: line 23: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] /api/auth/login has status code documentation"
+    }
+,
+    {
+      "gate": "route-service-alignment-api-auth-login",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "pagination-max-api-auth-login",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "status-enums-api-auth-login",
+      "status": "passed",
+      "output": "[OK] /api/auth/login status field present (enum validation deferred to implementation)"
+    }
+,
+    {
+      "gate": "endpoint-status-api-auth-logout",
+      "status": "passed",
+      "output": "/home/user/Foundry-v47/scripts/verify-endpoint-status.sh: line 23: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] /api/auth/logout has status code documentation"
+    }
+,
+    {
+      "gate": "route-service-alignment-api-auth-logout",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "pagination-max-api-auth-logout",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "status-enums-api-auth-logout",
+      "status": "passed",
+      "output": "[OK] /api/auth/logout status field present (enum validation deferred to implementation)"
+    }
+,
+    {
+      "gate": "endpoint-status-api-organisations-me",
+      "status": "passed",
+      "output": "/home/user/Foundry-v47/scripts/verify-endpoint-status.sh: line 23: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] /api/organisations/me has status code documentation"
+    }
+,
+    {
+      "gate": "route-service-alignment-api-organisations-me",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "pagination-max-api-organisations-me",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "status-enums-api-organisations-me",
+      "status": "passed",
+      "output": "[OK] /api/organisations/me status field present (enum validation deferred to implementation)"
+    }
+,
+    {
+      "gate": "endpoint-status-api-organisations-me",
+      "status": "passed",
+      "output": "/home/user/Foundry-v47/scripts/verify-endpoint-status.sh: line 23: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] /api/organisations/me has status code documentation"
+    }
+,
+    {
+      "gate": "route-service-alignment-api-organisations-me",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "pagination-max-api-organisations-me",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "status-enums-api-organisations-me",
+      "status": "passed",
+      "output": "[OK] /api/organisations/me status field present (enum validation deferred to implementation)"
+    }
+,
+    {
+      "gate": "endpoint-status-api-users",
+      "status": "passed",
+      "output": "/home/user/Foundry-v47/scripts/verify-endpoint-status.sh: line 23: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] /api/users has status code documentation"
+    }
+,
+    {
+      "gate": "route-service-alignment-api-users",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "pagination-max-api-users",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "status-enums-api-users",
+      "status": "passed",
+      "output": "[OK] /api/users status field present (enum validation deferred to implementation)"
+    }
+,
+    {
+      "gate": "endpoint-status-api-users",
+      "status": "passed",
+      "output": "/home/user/Foundry-v47/scripts/verify-endpoint-status.sh: line 23: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] /api/users has status code documentation"
+    }
+,
+    {
+      "gate": "route-service-alignment-api-users",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "pagination-max-api-users",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "status-enums-api-users",
+      "status": "passed",
+      "output": "[OK] /api/users status field present (enum validation deferred to implementation)"
+    }
+,
+    {
+      "gate": "endpoint-status-api-users-id",
+      "status": "passed",
+      "output": "/home/user/Foundry-v47/scripts/verify-endpoint-status.sh: line 23: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] /api/users/:id has status code documentation"
+    }
+,
+    {
+      "gate": "route-service-alignment-api-users-id",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "pagination-max-api-users-id",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "status-enums-api-users-id",
+      "status": "passed",
+      "output": "[OK] /api/users/:id status field present (enum validation deferred to implementation)"
+    }
+,
+    {
+      "gate": "endpoint-status-api-users-id",
+      "status": "passed",
+      "output": "/home/user/Foundry-v47/scripts/verify-endpoint-status.sh: line 23: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] /api/users/:id has status code documentation"
+    }
+,
+    {
+      "gate": "route-service-alignment-api-users-id",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "pagination-max-api-users-id",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "status-enums-api-users-id",
+      "status": "passed",
+      "output": "[OK] /api/users/:id status field present (enum validation deferred to implementation)"
+    }
+,
+    {
+      "gate": "endpoint-status-api-users-id",
+      "status": "passed",
+      "output": "/home/user/Foundry-v47/scripts/verify-endpoint-status.sh: line 23: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] /api/users/:id has status code documentation"
+    }
+,
+    {
+      "gate": "route-service-alignment-api-users-id",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "pagination-max-api-users-id",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "status-enums-api-users-id",
+      "status": "passed",
+      "output": "[OK] /api/users/:id status field present (enum validation deferred to implementation)"
+    }
+,
+    {
+      "gate": "endpoint-status-api-projects",
+      "status": "passed",
+      "output": "/home/user/Foundry-v47/scripts/verify-endpoint-status.sh: line 23: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] /api/projects has status code documentation"
+    }
+,
+    {
+      "gate": "route-service-alignment-api-projects",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "pagination-max-api-projects",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "status-enums-api-projects",
+      "status": "passed",
+      "output": "[OK] /api/projects status field present (enum validation deferred to implementation)"
+    }
+,
+    {
+      "gate": "endpoint-status-api-projects",
+      "status": "passed",
+      "output": "/home/user/Foundry-v47/scripts/verify-endpoint-status.sh: line 23: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] /api/projects has status code documentation"
+    }
+,
+    {
+      "gate": "route-service-alignment-api-projects",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "pagination-max-api-projects",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "status-enums-api-projects",
+      "status": "passed",
+      "output": "[OK] /api/projects status field present (enum validation deferred to implementation)"
+    }
+,
+    {
+      "gate": "endpoint-status-api-projects-id",
+      "status": "passed",
+      "output": "/home/user/Foundry-v47/scripts/verify-endpoint-status.sh: line 23: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] /api/projects/:id has status code documentation"
+    }
+,
+    {
+      "gate": "route-service-alignment-api-projects-id",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "pagination-max-api-projects-id",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "status-enums-api-projects-id",
+      "status": "passed",
+      "output": "[OK] /api/projects/:id status field present (enum validation deferred to implementation)"
+    }
+,
+    {
+      "gate": "endpoint-status-api-projects-id",
+      "status": "passed",
+      "output": "/home/user/Foundry-v47/scripts/verify-endpoint-status.sh: line 23: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] /api/projects/:id has status code documentation"
+    }
+,
+    {
+      "gate": "route-service-alignment-api-projects-id",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "pagination-max-api-projects-id",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "status-enums-api-projects-id",
+      "status": "passed",
+      "output": "[OK] /api/projects/:id status field present (enum validation deferred to implementation)"
+    }
+,
+    {
+      "gate": "endpoint-status-api-projects-id",
+      "status": "passed",
+      "output": "/home/user/Foundry-v47/scripts/verify-endpoint-status.sh: line 23: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] /api/projects/:id has status code documentation"
+    }
+,
+    {
+      "gate": "route-service-alignment-api-projects-id",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "pagination-max-api-projects-id",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "status-enums-api-projects-id",
+      "status": "passed",
+      "output": "[OK] /api/projects/:id status field present (enum validation deferred to implementation)"
+    }
+,
+    {
+      "gate": "endpoint-status-api-projects-id-field-mapping",
+      "status": "passed",
+      "output": "/home/user/Foundry-v47/scripts/verify-endpoint-status.sh: line 23: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] /api/projects/:id/field-mapping has status code documentation"
+    }
+,
+    {
+      "gate": "route-service-alignment-api-projects-id-field-mapping",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "pagination-max-api-projects-id-field-mapping",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "status-enums-api-projects-id-field-mapping",
+      "status": "passed",
+      "output": "[OK] /api/projects/:id/field-mapping status field present (enum validation deferred to implementation)"
+    }
+,
+    {
+      "gate": "endpoint-status-api-projects-id-de-identification",
+      "status": "passed",
+      "output": "/home/user/Foundry-v47/scripts/verify-endpoint-status.sh: line 23: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] /api/projects/:id/de-identification has status code documentation"
+    }
+,
+    {
+      "gate": "route-service-alignment-api-projects-id-de-identification",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "pagination-max-api-projects-id-de-identification",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "status-enums-api-projects-id-de-identification",
+      "status": "passed",
+      "output": "[OK] /api/projects/:id/de-identification status field present (enum validation deferred to implementation)"
+    }
+,
+    {
+      "gate": "endpoint-status-api-data-sources",
+      "status": "passed",
+      "output": "/home/user/Foundry-v47/scripts/verify-endpoint-status.sh: line 23: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] /api/data-sources has status code documentation"
+    }
+,
+    {
+      "gate": "route-service-alignment-api-data-sources",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "pagination-max-api-data-sources",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "status-enums-api-data-sources",
+      "status": "passed",
+      "output": "[OK] /api/data-sources status field present (enum validation deferred to implementation)"
+    }
+,
+    {
+      "gate": "endpoint-status-api-data-sources",
+      "status": "passed",
+      "output": "/home/user/Foundry-v47/scripts/verify-endpoint-status.sh: line 23: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] /api/data-sources has status code documentation"
+    }
+,
+    {
+      "gate": "route-service-alignment-api-data-sources",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "pagination-max-api-data-sources",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "status-enums-api-data-sources",
+      "status": "passed",
+      "output": "[OK] /api/data-sources status field present (enum validation deferred to implementation)"
+    }
+,
+    {
+      "gate": "endpoint-status-api-data-sources-id",
+      "status": "passed",
+      "output": "/home/user/Foundry-v47/scripts/verify-endpoint-status.sh: line 23: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] /api/data-sources/:id has status code documentation"
+    }
+,
+    {
+      "gate": "route-service-alignment-api-data-sources-id",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "pagination-max-api-data-sources-id",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "status-enums-api-data-sources-id",
+      "status": "passed",
+      "output": "[OK] /api/data-sources/:id status field present (enum validation deferred to implementation)"
+    }
+,
+    {
+      "gate": "endpoint-status-api-data-sources-id",
+      "status": "passed",
+      "output": "/home/user/Foundry-v47/scripts/verify-endpoint-status.sh: line 23: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] /api/data-sources/:id has status code documentation"
+    }
+,
+    {
+      "gate": "route-service-alignment-api-data-sources-id",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "pagination-max-api-data-sources-id",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "status-enums-api-data-sources-id",
+      "status": "passed",
+      "output": "[OK] /api/data-sources/:id status field present (enum validation deferred to implementation)"
+    }
+,
+    {
+      "gate": "endpoint-status-api-data-sources-id",
+      "status": "passed",
+      "output": "/home/user/Foundry-v47/scripts/verify-endpoint-status.sh: line 23: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] /api/data-sources/:id has status code documentation"
+    }
+,
+    {
+      "gate": "route-service-alignment-api-data-sources-id",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "pagination-max-api-data-sources-id",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "status-enums-api-data-sources-id",
+      "status": "passed",
+      "output": "[OK] /api/data-sources/:id status field present (enum validation deferred to implementation)"
+    }
+,
+    {
+      "gate": "endpoint-status-api-data-sources-id-api-connection",
+      "status": "passed",
+      "output": "/home/user/Foundry-v47/scripts/verify-endpoint-status.sh: line 23: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] /api/data-sources/:id/api-connection has status code documentation"
+    }
+,
+    {
+      "gate": "route-service-alignment-api-data-sources-id-api-connection",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "pagination-max-api-data-sources-id-api-connection",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "status-enums-api-data-sources-id-api-connection",
+      "status": "passed",
+      "output": "[OK] /api/data-sources/:id/api-connection status field present (enum validation deferred to implementation)"
+    }
+,
+    {
+      "gate": "endpoint-status-api-canonical-schemas",
+      "status": "passed",
+      "output": "/home/user/Foundry-v47/scripts/verify-endpoint-status.sh: line 23: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] /api/canonical-schemas has status code documentation"
+    }
+,
+    {
+      "gate": "route-service-alignment-api-canonical-schemas",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "pagination-max-api-canonical-schemas",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "status-enums-api-canonical-schemas",
+      "status": "passed",
+      "output": "[OK] /api/canonical-schemas status field present (enum validation deferred to implementation)"
+    }
+,
+    {
+      "gate": "endpoint-status-api-canonical-schemas-id",
+      "status": "passed",
+      "output": "/home/user/Foundry-v47/scripts/verify-endpoint-status.sh: line 23: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] /api/canonical-schemas/:id has status code documentation"
+    }
+,
+    {
+      "gate": "route-service-alignment-api-canonical-schemas-id",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "pagination-max-api-canonical-schemas-id",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "status-enums-api-canonical-schemas-id",
+      "status": "passed",
+      "output": "[OK] /api/canonical-schemas/:id status field present (enum validation deferred to implementation)"
+    }
+,
+    {
+      "gate": "endpoint-status-api-canonical-schemas",
+      "status": "passed",
+      "output": "/home/user/Foundry-v47/scripts/verify-endpoint-status.sh: line 23: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] /api/canonical-schemas has status code documentation"
+    }
+,
+    {
+      "gate": "route-service-alignment-api-canonical-schemas",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "pagination-max-api-canonical-schemas",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "status-enums-api-canonical-schemas",
+      "status": "passed",
+      "output": "[OK] /api/canonical-schemas status field present (enum validation deferred to implementation)"
+    }
+,
+    {
+      "gate": "endpoint-status-api-canonical-schemas-id",
+      "status": "passed",
+      "output": "/home/user/Foundry-v47/scripts/verify-endpoint-status.sh: line 23: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] /api/canonical-schemas/:id has status code documentation"
+    }
+,
+    {
+      "gate": "route-service-alignment-api-canonical-schemas-id",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "pagination-max-api-canonical-schemas-id",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "status-enums-api-canonical-schemas-id",
+      "status": "passed",
+      "output": "[OK] /api/canonical-schemas/:id status field present (enum validation deferred to implementation)"
+    }
+,
+    {
+      "gate": "endpoint-status-api-canonical-schemas-id",
+      "status": "passed",
+      "output": "/home/user/Foundry-v47/scripts/verify-endpoint-status.sh: line 23: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] /api/canonical-schemas/:id has status code documentation"
+    }
+,
+    {
+      "gate": "route-service-alignment-api-canonical-schemas-id",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "pagination-max-api-canonical-schemas-id",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "status-enums-api-canonical-schemas-id",
+      "status": "passed",
+      "output": "[OK] /api/canonical-schemas/:id status field present (enum validation deferred to implementation)"
+    }
+,
+    {
+      "gate": "endpoint-status-api-processing-pipelines",
+      "status": "passed",
+      "output": "/home/user/Foundry-v47/scripts/verify-endpoint-status.sh: line 23: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] /api/processing-pipelines has status code documentation"
+    }
+,
+    {
+      "gate": "route-service-alignment-api-processing-pipelines",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "pagination-max-api-processing-pipelines",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "status-enums-api-processing-pipelines",
+      "status": "passed",
+      "output": "[OK] /api/processing-pipelines status field present (enum validation deferred to implementation)"
+    }
+,
+    {
+      "gate": "endpoint-status-api-processing-pipelines-id",
+      "status": "passed",
+      "output": "/home/user/Foundry-v47/scripts/verify-endpoint-status.sh: line 23: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] /api/processing-pipelines/:id has status code documentation"
+    }
+,
+    {
+      "gate": "route-service-alignment-api-processing-pipelines-id",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "pagination-max-api-processing-pipelines-id",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "status-enums-api-processing-pipelines-id",
+      "status": "passed",
+      "output": "[OK] /api/processing-pipelines/:id status field present (enum validation deferred to implementation)"
+    }
+,
+    {
+      "gate": "endpoint-status-api-processing-pipelines",
+      "status": "passed",
+      "output": "/home/user/Foundry-v47/scripts/verify-endpoint-status.sh: line 23: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] /api/processing-pipelines has status code documentation"
+    }
+,
+    {
+      "gate": "route-service-alignment-api-processing-pipelines",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "pagination-max-api-processing-pipelines",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "status-enums-api-processing-pipelines",
+      "status": "passed",
+      "output": "[OK] /api/processing-pipelines status field present (enum validation deferred to implementation)"
+    }
+,
+    {
+      "gate": "endpoint-status-api-processing-pipelines-id",
+      "status": "passed",
+      "output": "/home/user/Foundry-v47/scripts/verify-endpoint-status.sh: line 23: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] /api/processing-pipelines/:id has status code documentation"
+    }
+,
+    {
+      "gate": "route-service-alignment-api-processing-pipelines-id",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "pagination-max-api-processing-pipelines-id",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "status-enums-api-processing-pipelines-id",
+      "status": "passed",
+      "output": "[OK] /api/processing-pipelines/:id status field present (enum validation deferred to implementation)"
+    }
+,
+    {
+      "gate": "endpoint-status-api-processing-pipelines-id",
+      "status": "passed",
+      "output": "/home/user/Foundry-v47/scripts/verify-endpoint-status.sh: line 23: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] /api/processing-pipelines/:id has status code documentation"
+    }
+,
+    {
+      "gate": "route-service-alignment-api-processing-pipelines-id",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "pagination-max-api-processing-pipelines-id",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "status-enums-api-processing-pipelines-id",
+      "status": "passed",
+      "output": "[OK] /api/processing-pipelines/:id status field present (enum validation deferred to implementation)"
+    }
+,
+    {
+      "gate": "endpoint-status-api-projects-projectId-processing-jobs",
+      "status": "passed",
+      "output": "/home/user/Foundry-v47/scripts/verify-endpoint-status.sh: line 23: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] /api/projects/:projectId/processing-jobs has status code documentation"
+    }
+,
+    {
+      "gate": "route-service-alignment-api-projects-projectId-processing-jobs",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "pagination-max-api-projects-projectId-processing-jobs",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "status-enums-api-projects-projectId-processing-jobs",
+      "status": "passed",
+      "output": "[OK] /api/projects/:projectId/processing-jobs status field present (enum validation deferred to implementation)"
+    }
+,
+    {
+      "gate": "endpoint-status-api-projects-projectId-processing-jobs",
+      "status": "passed",
+      "output": "/home/user/Foundry-v47/scripts/verify-endpoint-status.sh: line 23: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] /api/projects/:projectId/processing-jobs has status code documentation"
+    }
+,
+    {
+      "gate": "route-service-alignment-api-projects-projectId-processing-jobs",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "pagination-max-api-projects-projectId-processing-jobs",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "status-enums-api-projects-projectId-processing-jobs",
+      "status": "passed",
+      "output": "[OK] /api/projects/:projectId/processing-jobs status field present (enum validation deferred to implementation)"
+    }
+,
+    {
+      "gate": "endpoint-status-api-projects-projectId-processing-jobs-id",
+      "status": "passed",
+      "output": "/home/user/Foundry-v47/scripts/verify-endpoint-status.sh: line 23: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] /api/projects/:projectId/processing-jobs/:id has status code documentation"
+    }
+,
+    {
+      "gate": "route-service-alignment-api-projects-projectId-processing-jobs-id",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "pagination-max-api-projects-projectId-processing-jobs-id",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "status-enums-api-projects-projectId-processing-jobs-id",
+      "status": "passed",
+      "output": "[OK] /api/projects/:projectId/processing-jobs/:id status field present (enum validation deferred to implementation)"
+    }
+,
+    {
+      "gate": "endpoint-status-api-projects-projectId-processing-jobs-id-retry",
+      "status": "passed",
+      "output": "/home/user/Foundry-v47/scripts/verify-endpoint-status.sh: line 23: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] /api/projects/:projectId/processing-jobs/:id/retry has status code documentation"
+    }
+,
+    {
+      "gate": "route-service-alignment-api-projects-projectId-processing-jobs-id-retry",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "pagination-max-api-projects-projectId-processing-jobs-id-retry",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "status-enums-api-projects-projectId-processing-jobs-id-retry",
+      "status": "passed",
+      "output": "[OK] /api/projects/:projectId/processing-jobs/:id/retry status field present (enum validation deferred to implementation)"
+    }
+,
+    {
+      "gate": "endpoint-status-api-projects-projectId-datasets",
+      "status": "passed",
+      "output": "/home/user/Foundry-v47/scripts/verify-endpoint-status.sh: line 23: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] /api/projects/:projectId/datasets has status code documentation"
+    }
+,
+    {
+      "gate": "route-service-alignment-api-projects-projectId-datasets",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "pagination-max-api-projects-projectId-datasets",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "status-enums-api-projects-projectId-datasets",
+      "status": "passed",
+      "output": "[OK] /api/projects/:projectId/datasets status field present (enum validation deferred to implementation)"
+    }
+,
+    {
+      "gate": "endpoint-status-api-projects-projectId-datasets-id",
+      "status": "passed",
+      "output": "/home/user/Foundry-v47/scripts/verify-endpoint-status.sh: line 23: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] /api/projects/:projectId/datasets/:id has status code documentation"
+    }
+,
+    {
+      "gate": "route-service-alignment-api-projects-projectId-datasets-id",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "pagination-max-api-projects-projectId-datasets-id",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "status-enums-api-projects-projectId-datasets-id",
+      "status": "passed",
+      "output": "[OK] /api/projects/:projectId/datasets/:id status field present (enum validation deferred to implementation)"
+    }
+,
+    {
+      "gate": "endpoint-status-api-projects-projectId-datasets-id-download",
+      "status": "passed",
+      "output": "/home/user/Foundry-v47/scripts/verify-endpoint-status.sh: line 23: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] /api/projects/:projectId/datasets/:id/download has status code documentation"
+    }
+,
+    {
+      "gate": "route-service-alignment-api-projects-projectId-datasets-id-download",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "pagination-max-api-projects-projectId-datasets-id-download",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "status-enums-api-projects-projectId-datasets-id-download",
+      "status": "passed",
+      "output": "[OK] /api/projects/:projectId/datasets/:id/download status field present (enum validation deferred to implementation)"
+    }
+,
+    {
+      "gate": "endpoint-status-api-projects-projectId-datasets-id",
+      "status": "passed",
+      "output": "/home/user/Foundry-v47/scripts/verify-endpoint-status.sh: line 23: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] /api/projects/:projectId/datasets/:id has status code documentation"
+    }
+,
+    {
+      "gate": "route-service-alignment-api-projects-projectId-datasets-id",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "pagination-max-api-projects-projectId-datasets-id",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "status-enums-api-projects-projectId-datasets-id",
+      "status": "passed",
+      "output": "[OK] /api/projects/:projectId/datasets/:id status field present (enum validation deferred to implementation)"
+    }
+,
+    {
+      "gate": "endpoint-status-api-api-connectors",
+      "status": "passed",
+      "output": "/home/user/Foundry-v47/scripts/verify-endpoint-status.sh: line 23: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] /api/api-connectors has status code documentation"
+    }
+,
+    {
+      "gate": "route-service-alignment-api-api-connectors",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "pagination-max-api-api-connectors",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "status-enums-api-api-connectors",
+      "status": "passed",
+      "output": "[OK] /api/api-connectors status field present (enum validation deferred to implementation)"
+    }
+,
+    {
+      "gate": "endpoint-status-api-api-connectors-id",
+      "status": "passed",
+      "output": "/home/user/Foundry-v47/scripts/verify-endpoint-status.sh: line 23: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] /api/api-connectors/:id has status code documentation"
+    }
+,
+    {
+      "gate": "route-service-alignment-api-api-connectors-id",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "pagination-max-api-api-connectors-id",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "status-enums-api-api-connectors-id",
+      "status": "passed",
+      "output": "[OK] /api/api-connectors/:id status field present (enum validation deferred to implementation)"
+    }
+,
+    {
+      "gate": "endpoint-status-api-api-connectors",
+      "status": "passed",
+      "output": "/home/user/Foundry-v47/scripts/verify-endpoint-status.sh: line 23: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] /api/api-connectors has status code documentation"
+    }
+,
+    {
+      "gate": "route-service-alignment-api-api-connectors",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "pagination-max-api-api-connectors",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "status-enums-api-api-connectors",
+      "status": "passed",
+      "output": "[OK] /api/api-connectors status field present (enum validation deferred to implementation)"
+    }
+,
+    {
+      "gate": "endpoint-status-api-api-connectors-id",
+      "status": "passed",
+      "output": "/home/user/Foundry-v47/scripts/verify-endpoint-status.sh: line 23: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] /api/api-connectors/:id has status code documentation"
+    }
+,
+    {
+      "gate": "route-service-alignment-api-api-connectors-id",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "pagination-max-api-api-connectors-id",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "status-enums-api-api-connectors-id",
+      "status": "passed",
+      "output": "[OK] /api/api-connectors/:id status field present (enum validation deferred to implementation)"
+    }
+,
+    {
+      "gate": "endpoint-status-api-api-connectors-id",
+      "status": "passed",
+      "output": "/home/user/Foundry-v47/scripts/verify-endpoint-status.sh: line 23: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] /api/api-connectors/:id has status code documentation"
+    }
+,
+    {
+      "gate": "route-service-alignment-api-api-connectors-id",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "pagination-max-api-api-connectors-id",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "status-enums-api-api-connectors-id",
+      "status": "passed",
+      "output": "[OK] /api/api-connectors/:id status field present (enum validation deferred to implementation)"
+    }
+,
+    {
+      "gate": "endpoint-status-api-projects-projectId-data-sources",
+      "status": "passed",
+      "output": "/home/user/Foundry-v47/scripts/verify-endpoint-status.sh: line 23: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] /api/projects/:projectId/data-sources has status code documentation"
+    }
+,
+    {
+      "gate": "route-service-alignment-api-projects-projectId-data-sources",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "pagination-max-api-projects-projectId-data-sources",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "status-enums-api-projects-projectId-data-sources",
+      "status": "passed",
+      "output": "[OK] /api/projects/:projectId/data-sources status field present (enum validation deferred to implementation)"
+    }
+,
+    {
+      "gate": "endpoint-status-api-projects-projectId-data-sources",
+      "status": "passed",
+      "output": "/home/user/Foundry-v47/scripts/verify-endpoint-status.sh: line 23: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] /api/projects/:projectId/data-sources has status code documentation"
+    }
+,
+    {
+      "gate": "route-service-alignment-api-projects-projectId-data-sources",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "pagination-max-api-projects-projectId-data-sources",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "status-enums-api-projects-projectId-data-sources",
+      "status": "passed",
+      "output": "[OK] /api/projects/:projectId/data-sources status field present (enum validation deferred to implementation)"
+    }
+,
+    {
+      "gate": "endpoint-status-api-projects-projectId-data-sources-id",
+      "status": "passed",
+      "output": "/home/user/Foundry-v47/scripts/verify-endpoint-status.sh: line 23: [[: 0\n0: syntax error in expression (error token is \"0\")\n[OK] /api/projects/:projectId/data-sources/:id has status code documentation"
+    }
+,
+    {
+      "gate": "route-service-alignment-api-projects-projectId-data-sources-id",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "pagination-max-api-projects-projectId-data-sources-id",
+      "status": "failed",
+      "output": ""
+    }
+,
+    {
+      "gate": "status-enums-api-projects-projectId-data-sources-id",
+      "status": "passed",
+      "output": "[OK] /api/projects/:projectId/data-sources/:id status field present (enum validation deferred to implementation)"
+    }
+,
+    {
+      "gate": "upload-e2e",
+      "status": "failed",
+      "output": "=== verify-upload-e2e ===\n/home/user/Foundry-v47/scripts/verify-upload-e2e.sh: line 16: [[: 0\n0: syntax error in expression (error token is \"0\")\nFound 0\n0 upload endpoints"
+    }
+,
+    {
+      "gate": "ui-canonical-paths",
+      "status": "failed",
+      "output": "=== verify-ui-canonical-paths ===\n[OK] All 16 page paths are unique\n[X] FAIL: Invalid path pattern: / (use /resource or /resource/:id)\n[X] FAIL: Invalid path pattern: /projects/new (use /resource or /resource/:id)\n[X] FAIL: Invalid path pattern: /projects/:projectId/sources (use /resource or /resource/:id)\n[X] FAIL: Invalid path pattern: /projects/:projectId/sources/:dataSourceId/mapping (use /resource or /resource/:id)\n[X] FAIL: Invalid path pattern: /projects/:projectId/sources/:dataSourceId/preview (use /resource or /resource/:id)\n[X] FAIL: Invalid path pattern: /projects/:projectId/processing (use /resource or /resource/:id)\n[X] FAIL: Invalid path pattern: /projects/:projectId/datasets (use /resource or /resource/:id)\n[X] FAIL: Invalid path pattern: /data-sources/new (use /resource or /resource/:id)\n[X] FAIL: Invalid path pattern: /admin/users (use /resource or /resource/:id)"
+    }
+,
+    {
+      "gate": "ui-api-alignment",
+      "status": "passed",
+      "output": "=== verify-ui-api-alignment ===\n/home/user/Foundry-v47/scripts/verify-ui-api-alignment.sh: line 17: [[: 0\n0: syntax error in expression (error token is \"0\")\nChecking UI-API alignment for 0\n0 pages...\n/home/user/Foundry-v47/scripts/verify-ui-api-alignment.sh: line 25: 0\n0: syntax error in expression (error token is \"0\")"
+    }
+,
+    {
+      "gate": "ui-self-consistency",
+      "status": "passed",
+      "output": "=== verify-ui-self-consistency ===\n[OK] Schema version present\n[OK] pages array present\n/home/user/Foundry-v47/scripts/verify-ui-self-consistency.sh: line 32: [[: 0\n0: syntax error in expression (error token is \"0\")"
+    }
+,
+    {
+      "gate": "no-deferred-pages",
+      "status": "failed",
+      "output": "=== verify-no-deferred-pages ==="
+    }
+  ],
+  "endTime": "2026-02-08T08:59:54Z",
   "summary": {
-    "total": 0,
-    "passed": 0,
-    "failed": 0
-  },
-  "gates": [],
-  "_note": "This is a template. Actual results are written by scripts/run-all-gates.sh"
+    "total": 228,
+    "passed": 116,
+    "failed": 112
+  }
 }

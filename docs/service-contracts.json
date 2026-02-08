@@ -19,44 +19,67 @@
         "fileUpload": false,
         "acceptsBody": false,
         "notes": "Framework health check endpoint - always public"
-      }
+      },
+      "serviceFile": "server/services/health.service.ts"
     },
     {
       "path": "/api/auth/session",
       "method": "GET",
       "status": "required",
       "routeFile": "server/routes/auth.routes.ts",
-      "middleware": ["requireAuth"],
+      "middleware": [
+        "requireAuth"
+      ],
       "authentication": "required",
       "serviceContract": {
         "serviceName": "authService",
         "method": "validateSession",
-        "args": ["req.user.id"],
+        "args": [
+          "req.user.id"
+        ],
         "returns": "SessionValidationResult",
         "authRequired": true,
         "rbac": null,
         "fileUpload": false,
         "acceptsBody": false,
         "notes": "Session validation - framework standard"
-      }
+      },
+      "serviceFile": "server/services/auth.service.ts"
     },
     {
       "path": "/api/auth/login",
       "method": "POST",
       "status": "required",
       "routeFile": "server/routes/auth.routes.ts",
-      "middleware": ["validateBody"],
+      "middleware": [
+        "validateBody"
+      ],
       "authentication": "public",
       "serviceContract": {
         "serviceName": "authService",
         "method": "login",
-        "args": ["req.body.email", "req.body.password"],
+        "args": [
+          "req.body.email",
+          "req.body.password"
+        ],
         "returns": "AuthTokenResponse",
         "authRequired": false,
         "rbac": null,
         "fileUpload": false,
         "acceptsBody": true,
         "notes": "User authentication endpoint"
+      },
+      "serviceFile": "server/services/auth.service.ts",
+      "requestBody": {
+        "contentType": "application/json",
+        "schema": {
+          "email": "string",
+          "password": "string"
+        },
+        "required": [
+          "email",
+          "password"
+        ]
       }
     },
     {
@@ -64,56 +87,83 @@
       "method": "POST",
       "status": "required",
       "routeFile": "server/routes/auth.routes.ts",
-      "middleware": ["requireAuth"],
+      "middleware": [
+        "requireAuth"
+      ],
       "authentication": "required",
       "serviceContract": {
         "serviceName": "authService",
         "method": "logout",
-        "args": ["req.user.id"],
+        "args": [
+          "req.user.id"
+        ],
         "returns": "void",
         "authRequired": true,
         "rbac": null,
         "fileUpload": false,
         "acceptsBody": false,
         "notes": "User logout endpoint"
-      }
+      },
+      "serviceFile": "server/services/auth.service.ts"
     },
     {
       "path": "/api/organisations/me",
       "method": "GET",
       "status": "required",
       "routeFile": "server/routes/organisations.routes.ts",
-      "middleware": ["requireAuth"],
+      "middleware": [
+        "requireAuth"
+      ],
       "authentication": "required",
       "serviceContract": {
         "serviceName": "organisationsService",
         "method": "getCurrentOrganisation",
-        "args": ["req.user.organisationId"],
+        "args": [
+          "req.user.organisationId"
+        ],
         "returns": "Organisation",
         "authRequired": true,
         "rbac": null,
         "fileUpload": false,
         "acceptsBody": false,
         "notes": "Get current user's organisation using singleton pattern"
-      }
+      },
+      "serviceFile": "server/services/organisations.service.ts"
     },
     {
       "path": "/api/organisations/me",
       "method": "PATCH",
       "status": "required",
       "routeFile": "server/routes/organisations.routes.ts",
-      "middleware": ["requireAuth", "requireRole", "validateBody"],
+      "middleware": [
+        "requireAuth",
+        "requireRole",
+        "validateBody"
+      ],
       "authentication": "required",
       "serviceContract": {
         "serviceName": "organisationsService",
         "method": "updateOrganisation",
-        "args": ["req.user.organisationId", "req.body.name"],
+        "args": [
+          "req.user.organisationId",
+          "req.body.name"
+        ],
         "returns": "Organisation",
         "authRequired": true,
         "rbac": "admin",
         "fileUpload": false,
         "acceptsBody": true,
         "notes": "Admin-only organisation update - only name editing allowed in MVP"
+      },
+      "serviceFile": "server/services/organisations.service.ts",
+      "requestBody": {
+        "contentType": "application/json",
+        "schema": {
+          "name": "string"
+        },
+        "required": [
+          "name"
+        ]
       }
     },
     {
@@ -121,18 +171,41 @@
       "method": "POST",
       "status": "required",
       "routeFile": "server/routes/users.routes.ts",
-      "middleware": ["requireAuth", "requireRole", "validateBody"],
+      "middleware": [
+        "requireAuth",
+        "requireRole",
+        "validateBody"
+      ],
       "authentication": "required",
       "serviceContract": {
         "serviceName": "usersService",
         "method": "createUser",
-        "args": ["req.user.organisationId", "req.body.email", "req.body.password", "req.body.role"],
+        "args": [
+          "req.user.organisationId",
+          "req.body.email",
+          "req.body.password",
+          "req.body.role"
+        ],
         "returns": "User",
         "authRequired": true,
         "rbac": "admin",
         "fileUpload": false,
         "acceptsBody": true,
         "notes": "Admin-only user creation with invite-only model. Password is plaintext in request, hashed by service layer before storage."
+      },
+      "serviceFile": "server/services/users.service.ts",
+      "requestBody": {
+        "contentType": "application/json",
+        "schema": {
+          "email": "string",
+          "password": "string",
+          "role": "string"
+        },
+        "required": [
+          "email",
+          "password",
+          "role"
+        ]
       }
     },
     {
@@ -140,56 +213,85 @@
       "method": "GET",
       "status": "required",
       "routeFile": "server/routes/users.routes.ts",
-      "middleware": ["requireAuth"],
+      "middleware": [
+        "requireAuth"
+      ],
       "authentication": "required",
       "serviceContract": {
         "serviceName": "usersService",
         "method": "listUsers",
-        "args": ["req.user.organisationId"],
+        "args": [
+          "req.user.organisationId"
+        ],
         "returns": "User[]",
         "authRequired": true,
         "rbac": null,
         "fileUpload": false,
         "acceptsBody": false,
         "notes": "Token-scoped user listing - returns only users in authenticated user's organisation"
-      }
+      },
+      "serviceFile": "server/services/users.service.ts"
     },
     {
       "path": "/api/users/:id",
       "method": "GET",
       "status": "required",
       "routeFile": "server/routes/users.routes.ts",
-      "middleware": ["requireAuth"],
+      "middleware": [
+        "requireAuth"
+      ],
       "authentication": "required",
       "serviceContract": {
         "serviceName": "usersService",
         "method": "getUserById",
-        "args": ["req.user.organisationId", "req.params.id"],
+        "args": [
+          "req.user.organisationId",
+          "req.params.id"
+        ],
         "returns": "User",
         "authRequired": true,
         "rbac": null,
         "fileUpload": false,
         "acceptsBody": false,
         "notes": "Token-scoped user retrieval - service validates organisationId match"
-      }
+      },
+      "serviceFile": "server/services/users.service.ts"
     },
     {
       "path": "/api/users/:id",
       "method": "PATCH",
       "status": "required",
       "routeFile": "server/routes/users.routes.ts",
-      "middleware": ["requireAuth", "requireRole", "validateBody"],
+      "middleware": [
+        "requireAuth",
+        "requireRole",
+        "validateBody"
+      ],
       "authentication": "required",
       "serviceContract": {
         "serviceName": "usersService",
         "method": "updateUser",
-        "args": ["req.user.organisationId", "req.params.id", "req.body.email", "req.body.role"],
+        "args": [
+          "req.user.organisationId",
+          "req.params.id",
+          "req.body.email",
+          "req.body.role"
+        ],
         "returns": "User",
         "authRequired": true,
         "rbac": "admin",
         "fileUpload": false,
         "acceptsBody": true,
         "notes": "Admin-only user update. Role assignment allowed because endpoint has requireRole middleware and rbac: admin."
+      },
+      "serviceFile": "server/services/users.service.ts",
+      "requestBody": {
+        "contentType": "application/json",
+        "schema": {
+          "email": "string",
+          "role": "string"
+        },
+        "required": []
       }
     },
     {
@@ -197,37 +299,63 @@
       "method": "DELETE",
       "status": "required",
       "routeFile": "server/routes/users.routes.ts",
-      "middleware": ["requireAuth", "requireRole"],
+      "middleware": [
+        "requireAuth",
+        "requireRole"
+      ],
       "authentication": "required",
       "serviceContract": {
         "serviceName": "usersService",
         "method": "deleteUser",
-        "args": ["req.user.organisationId", "req.params.id"],
+        "args": [
+          "req.user.organisationId",
+          "req.params.id"
+        ],
         "returns": "void",
         "authRequired": true,
         "rbac": "admin",
         "fileUpload": false,
         "acceptsBody": false,
         "notes": "Admin-only user soft deletion - enforces tenant boundary via organisationId"
-      }
+      },
+      "serviceFile": "server/services/users.service.ts"
     },
     {
       "path": "/api/projects",
       "method": "POST",
       "status": "required",
       "routeFile": "server/routes/projects.routes.ts",
-      "middleware": ["requireAuth", "validateBody"],
+      "middleware": [
+        "requireAuth",
+        "validateBody"
+      ],
       "authentication": "required",
       "serviceContract": {
         "serviceName": "projectsService",
         "method": "createProject",
-        "args": ["req.user.organisationId", "req.body.name", "req.body.description", "req.user.id"],
+        "args": [
+          "req.user.organisationId",
+          "req.body.name",
+          "req.body.description",
+          "req.user.id"
+        ],
         "returns": "Project",
         "authRequired": true,
         "rbac": null,
         "fileUpload": false,
         "acceptsBody": true,
         "notes": "Token-scoped project creation - all members can create projects"
+      },
+      "serviceFile": "server/services/projects.service.ts",
+      "requestBody": {
+        "contentType": "application/json",
+        "schema": {
+          "name": "string",
+          "description": "string"
+        },
+        "required": [
+          "name"
+        ]
       }
     },
     {
@@ -235,56 +363,89 @@
       "method": "GET",
       "status": "required",
       "routeFile": "server/routes/projects.routes.ts",
-      "middleware": ["requireAuth"],
+      "middleware": [
+        "requireAuth"
+      ],
       "authentication": "required",
       "serviceContract": {
         "serviceName": "projectsService",
         "method": "listProjects",
-        "args": ["req.user.organisationId", "req.query.status"],
+        "args": [
+          "req.user.organisationId",
+          "req.query.status"
+        ],
         "returns": "Project[]",
         "authRequired": true,
         "rbac": null,
         "fileUpload": false,
         "acceptsBody": false,
         "notes": "Token-scoped project listing with optional status filter"
-      }
+      },
+      "serviceFile": "server/services/projects.service.ts"
     },
     {
       "path": "/api/projects/:id",
       "method": "GET",
       "status": "required",
       "routeFile": "server/routes/projects.routes.ts",
-      "middleware": ["requireAuth"],
+      "middleware": [
+        "requireAuth"
+      ],
       "authentication": "required",
       "serviceContract": {
         "serviceName": "projectsService",
         "method": "getProjectById",
-        "args": ["req.user.organisationId", "req.params.id"],
+        "args": [
+          "req.user.organisationId",
+          "req.params.id"
+        ],
         "returns": "Project",
         "authRequired": true,
         "rbac": null,
         "fileUpload": false,
         "acceptsBody": false,
         "notes": "Token-scoped project retrieval - service validates organisationId match"
-      }
+      },
+      "serviceFile": "server/services/projects.service.ts"
     },
     {
       "path": "/api/projects/:id",
       "method": "PATCH",
       "status": "required",
       "routeFile": "server/routes/projects.routes.ts",
-      "middleware": ["requireAuth", "validateBody"],
+      "middleware": [
+        "requireAuth",
+        "validateBody"
+      ],
       "authentication": "required",
       "serviceContract": {
         "serviceName": "projectsService",
         "method": "updateProject",
-        "args": ["req.user.organisationId", "req.params.id", "req.body.name", "req.body.description", "req.body.status", "req.body.canonicalSchemaId", "req.body.processingPipelineId"],
+        "args": [
+          "req.user.organisationId",
+          "req.params.id",
+          "req.body.name",
+          "req.body.description",
+          "req.body.status",
+          "req.body.canonicalSchemaId",
+          "req.body.processingPipelineId"
+        ],
         "returns": "Project",
         "authRequired": true,
         "rbac": null,
         "fileUpload": false,
         "acceptsBody": true,
         "notes": "Token-scoped project update - all members can update projects in their organisation"
+      },
+      "serviceFile": "server/services/projects.service.ts",
+      "requestBody": {
+        "contentType": "application/json",
+        "schema": {
+          "name": "string",
+          "description": "string",
+          "status": "string"
+        },
+        "required": []
       }
     },
     {
@@ -292,37 +453,60 @@
       "method": "DELETE",
       "status": "required",
       "routeFile": "server/routes/projects.routes.ts",
-      "middleware": ["requireAuth"],
+      "middleware": [
+        "requireAuth"
+      ],
       "authentication": "required",
       "serviceContract": {
         "serviceName": "projectsService",
         "method": "deleteProject",
-        "args": ["req.user.organisationId", "req.params.id"],
+        "args": [
+          "req.user.organisationId",
+          "req.params.id"
+        ],
         "returns": "void",
         "authRequired": true,
         "rbac": null,
         "fileUpload": false,
         "acceptsBody": false,
         "notes": "Token-scoped project soft deletion - enforces tenant boundary"
-      }
+      },
+      "serviceFile": "server/services/projects.service.ts"
     },
     {
       "path": "/api/projects/:id/field-mapping",
       "method": "PATCH",
       "status": "required",
       "routeFile": "server/routes/projects.routes.ts",
-      "middleware": ["requireAuth", "validateBody"],
+      "middleware": [
+        "requireAuth",
+        "validateBody"
+      ],
       "authentication": "required",
       "serviceContract": {
         "serviceName": "projectsService",
         "method": "updateFieldMapping",
-        "args": ["req.user.organisationId", "req.params.id", "req.body.fieldMappingConfig"],
+        "args": [
+          "req.user.organisationId",
+          "req.params.id",
+          "req.body.fieldMappingConfig"
+        ],
         "returns": "Project",
         "authRequired": true,
         "rbac": null,
         "fileUpload": false,
         "acceptsBody": true,
         "notes": "Update project field mapping configuration with version increment"
+      },
+      "serviceFile": "server/services/projects.service.ts",
+      "requestBody": {
+        "contentType": "application/json",
+        "schema": {
+          "fieldMappingConfig": "json"
+        },
+        "required": [
+          "fieldMappingConfig"
+        ]
       }
     },
     {
@@ -330,18 +514,35 @@
       "method": "PATCH",
       "status": "required",
       "routeFile": "server/routes/projects.routes.ts",
-      "middleware": ["requireAuth", "validateBody"],
+      "middleware": [
+        "requireAuth",
+        "validateBody"
+      ],
       "authentication": "required",
       "serviceContract": {
         "serviceName": "projectsService",
         "method": "updateDeIdentification",
-        "args": ["req.user.organisationId", "req.params.id", "req.body.deIdentificationConfig"],
+        "args": [
+          "req.user.organisationId",
+          "req.params.id",
+          "req.body.deIdentificationConfig"
+        ],
         "returns": "Project",
         "authRequired": true,
         "rbac": null,
         "fileUpload": false,
         "acceptsBody": true,
         "notes": "Update project de-identification configuration with version increment"
+      },
+      "serviceFile": "server/services/projects.service.ts",
+      "requestBody": {
+        "contentType": "application/json",
+        "schema": {
+          "deIdentificationConfig": "json"
+        },
+        "required": [
+          "deIdentificationConfig"
+        ]
       }
     },
     {
@@ -349,18 +550,41 @@
       "method": "POST",
       "status": "required",
       "routeFile": "server/routes/dataSources.routes.ts",
-      "middleware": ["requireAuth", "fileUpload", "validateMultipart"],
+      "middleware": [
+        "requireAuth",
+        "fileUpload",
+        "validateMultipart"
+      ],
       "authentication": "required",
       "serviceContract": {
         "serviceName": "dataSourcesService",
         "method": "createDataSource",
-        "args": ["req.user.organisationId", "req.file", "req.body.name", "req.body.sourceType", "req.user.id"],
+        "args": [
+          "req.user.organisationId",
+          "req.file",
+          "req.body.name",
+          "req.body.sourceType",
+          "req.user.id"
+        ],
         "returns": "DataSource",
         "authRequired": true,
         "rbac": null,
         "fileUpload": true,
         "acceptsBody": true,
         "notes": "Token-scoped file upload data source creation. Uses validateMultipart because file upload has form fields."
+      },
+      "serviceFile": "server/services/dataSources.service.ts",
+      "requestBody": {
+        "contentType": "application/json",
+        "schema": {
+          "name": "string",
+          "type": "string",
+          "connectionConfig": "json"
+        },
+        "required": [
+          "name",
+          "type"
+        ]
       }
     },
     {
@@ -368,56 +592,86 @@
       "method": "GET",
       "status": "required",
       "routeFile": "server/routes/dataSources.routes.ts",
-      "middleware": ["requireAuth"],
+      "middleware": [
+        "requireAuth"
+      ],
       "authentication": "required",
       "serviceContract": {
         "serviceName": "dataSourcesService",
         "method": "listDataSources",
-        "args": ["req.user.organisationId", "req.query.status", "req.query.sourceType"],
+        "args": [
+          "req.user.organisationId",
+          "req.query.status",
+          "req.query.sourceType"
+        ],
         "returns": "DataSource[]",
         "authRequired": true,
         "rbac": null,
         "fileUpload": false,
         "acceptsBody": false,
         "notes": "Token-scoped data source listing with optional filters"
-      }
+      },
+      "serviceFile": "server/services/dataSources.service.ts"
     },
     {
       "path": "/api/data-sources/:id",
       "method": "GET",
       "status": "required",
       "routeFile": "server/routes/dataSources.routes.ts",
-      "middleware": ["requireAuth"],
+      "middleware": [
+        "requireAuth"
+      ],
       "authentication": "required",
       "serviceContract": {
         "serviceName": "dataSourcesService",
         "method": "getDataSourceById",
-        "args": ["req.user.organisationId", "req.params.id"],
+        "args": [
+          "req.user.organisationId",
+          "req.params.id"
+        ],
         "returns": "DataSource",
         "authRequired": true,
         "rbac": null,
         "fileUpload": false,
         "acceptsBody": false,
         "notes": "Token-scoped data source retrieval - service validates organisationId match"
-      }
+      },
+      "serviceFile": "server/services/dataSources.service.ts"
     },
     {
       "path": "/api/data-sources/:id",
       "method": "PATCH",
       "status": "required",
       "routeFile": "server/routes/dataSources.routes.ts",
-      "middleware": ["requireAuth", "validateBody"],
+      "middleware": [
+        "requireAuth",
+        "validateBody"
+      ],
       "authentication": "required",
       "serviceContract": {
         "serviceName": "dataSourcesService",
         "method": "updateDataSource",
-        "args": ["req.user.organisationId", "req.params.id", "req.body.name", "req.body.status"],
+        "args": [
+          "req.user.organisationId",
+          "req.params.id",
+          "req.body.name",
+          "req.body.status"
+        ],
         "returns": "DataSource",
         "authRequired": true,
         "rbac": null,
         "fileUpload": false,
         "acceptsBody": true,
         "notes": "Token-scoped data source update"
+      },
+      "serviceFile": "server/services/dataSources.service.ts",
+      "requestBody": {
+        "contentType": "application/json",
+        "schema": {
+          "name": "string",
+          "connectionConfig": "json"
+        },
+        "required": []
       }
     },
     {
@@ -425,94 +679,141 @@
       "method": "DELETE",
       "status": "required",
       "routeFile": "server/routes/dataSources.routes.ts",
-      "middleware": ["requireAuth"],
+      "middleware": [
+        "requireAuth"
+      ],
       "authentication": "required",
       "serviceContract": {
         "serviceName": "dataSourcesService",
         "method": "deleteDataSource",
-        "args": ["req.user.organisationId", "req.params.id"],
+        "args": [
+          "req.user.organisationId",
+          "req.params.id"
+        ],
         "returns": "void",
         "authRequired": true,
         "rbac": null,
         "fileUpload": false,
         "acceptsBody": false,
         "notes": "Token-scoped data source soft deletion"
-      }
+      },
+      "serviceFile": "server/services/dataSources.service.ts"
     },
     {
       "path": "/api/data-sources/:id/api-connection",
       "method": "POST",
       "status": "required",
       "routeFile": "server/routes/dataSources.routes.ts",
-      "middleware": ["requireAuth", "validateBody"],
+      "middleware": [
+        "requireAuth",
+        "validateBody"
+      ],
       "authentication": "required",
       "serviceContract": {
         "serviceName": "dataSourcesService",
         "method": "createApiConnection",
-        "args": ["req.user.organisationId", "req.params.id", "req.body.apiConnectorId", "req.body.connectionConfig", "req.user.id"],
+        "args": [
+          "req.user.organisationId",
+          "req.params.id",
+          "req.body.apiConnectorId",
+          "req.body.connectionConfig",
+          "req.user.id"
+        ],
         "returns": "DataSource",
         "authRequired": true,
         "rbac": null,
         "fileUpload": false,
         "acceptsBody": true,
         "notes": "Configure API connection for data source"
-      }
+      },
+      "serviceFile": "server/services/dataSources.service.ts"
     },
     {
       "path": "/api/canonical-schemas",
       "method": "GET",
       "status": "required",
       "routeFile": "server/routes/canonicalSchemas.routes.ts",
-      "middleware": ["requireAuth"],
+      "middleware": [
+        "requireAuth"
+      ],
       "authentication": "required",
       "serviceContract": {
         "serviceName": "canonicalSchemasService",
         "method": "listCanonicalSchemas",
-        "args": ["req.query.category"],
+        "args": [
+          "req.query.category"
+        ],
         "returns": "CanonicalSchema[]",
         "authRequired": true,
         "rbac": null,
         "fileUpload": false,
         "acceptsBody": false,
         "notes": "Platform-level resource - all authenticated users can read schemas. No organisationId required."
-      }
+      },
+      "serviceFile": "server/services/canonicalSchemas.service.ts"
     },
     {
       "path": "/api/canonical-schemas/:id",
       "method": "GET",
       "status": "required",
       "routeFile": "server/routes/canonicalSchemas.routes.ts",
-      "middleware": ["requireAuth"],
+      "middleware": [
+        "requireAuth"
+      ],
       "authentication": "required",
       "serviceContract": {
         "serviceName": "canonicalSchemasService",
         "method": "getCanonicalSchemaById",
-        "args": ["req.params.id"],
+        "args": [
+          "req.params.id"
+        ],
         "returns": "CanonicalSchema",
         "authRequired": true,
         "rbac": null,
         "fileUpload": false,
         "acceptsBody": false,
         "notes": "Platform-level resource - no tenant scoping required"
-      }
+      },
+      "serviceFile": "server/services/canonicalSchemas.service.ts"
     },
     {
       "path": "/api/canonical-schemas",
       "method": "POST",
       "status": "deferred",
       "routeFile": "server/routes/canonicalSchemas.routes.ts",
-      "middleware": ["requireAuth", "requireRole", "validateBody"],
+      "middleware": [
+        "requireAuth",
+        "requireRole",
+        "validateBody"
+      ],
       "authentication": "required",
       "serviceContract": {
         "serviceName": "canonicalSchemasService",
         "method": "createCanonicalSchema",
-        "args": ["req.body.name", "req.body.category", "req.body.schemaDefinition", "req.body.isDefault"],
+        "args": [
+          "req.body.name",
+          "req.body.category",
+          "req.body.schemaDefinition",
+          "req.body.isDefault"
+        ],
         "returns": "CanonicalSchema",
         "authRequired": true,
         "rbac": "admin",
         "fileUpload": false,
         "acceptsBody": true,
         "notes": "DEFERRED: MVP uses pre-built canonical schemas. Schema creation deferred to marketplace phase per scope-manifest."
+      },
+      "serviceFile": "server/services/canonicalSchemas.service.ts",
+      "requestBody": {
+        "contentType": "application/json",
+        "schema": {
+          "name": "string",
+          "fields": "json"
+        },
+        "required": [
+          "name",
+          "fields"
+        ]
       }
     },
     {
@@ -520,18 +821,36 @@
       "method": "PATCH",
       "status": "deferred",
       "routeFile": "server/routes/canonicalSchemas.routes.ts",
-      "middleware": ["requireAuth", "requireRole", "validateBody"],
+      "middleware": [
+        "requireAuth",
+        "requireRole",
+        "validateBody"
+      ],
       "authentication": "required",
       "serviceContract": {
         "serviceName": "canonicalSchemasService",
         "method": "updateCanonicalSchema",
-        "args": ["req.params.id", "req.body.name", "req.body.schemaDefinition", "req.body.isDefault"],
+        "args": [
+          "req.params.id",
+          "req.body.name",
+          "req.body.schemaDefinition",
+          "req.body.isDefault"
+        ],
         "returns": "CanonicalSchema",
         "authRequired": true,
         "rbac": "admin",
         "fileUpload": false,
         "acceptsBody": true,
         "notes": "DEFERRED: Schema mutation deferred to marketplace phase - users select from pre-built schemas in MVP"
+      },
+      "serviceFile": "server/services/canonicalSchemas.service.ts",
+      "requestBody": {
+        "contentType": "application/json",
+        "schema": {
+          "name": "string",
+          "fields": "json"
+        },
+        "required": []
       }
     },
     {
@@ -539,26 +858,34 @@
       "method": "DELETE",
       "status": "deferred",
       "routeFile": "server/routes/canonicalSchemas.routes.ts",
-      "middleware": ["requireAuth", "requireRole"],
+      "middleware": [
+        "requireAuth",
+        "requireRole"
+      ],
       "authentication": "required",
       "serviceContract": {
         "serviceName": "canonicalSchemasService",
         "method": "deleteCanonicalSchema",
-        "args": ["req.params.id"],
+        "args": [
+          "req.params.id"
+        ],
         "returns": "void",
         "authRequired": true,
         "rbac": "admin",
         "fileUpload": false,
         "acceptsBody": false,
         "notes": "DEFERRED: Schema deletion deferred to marketplace phase"
-      }
+      },
+      "serviceFile": "server/services/canonicalSchemas.service.ts"
     },
     {
       "path": "/api/processing-pipelines",
       "method": "GET",
       "status": "required",
       "routeFile": "server/routes/processingPipelines.routes.ts",
-      "middleware": ["requireAuth"],
+      "middleware": [
+        "requireAuth"
+      ],
       "authentication": "required",
       "serviceContract": {
         "serviceName": "processingPipelinesService",
@@ -570,44 +897,71 @@
         "fileUpload": false,
         "acceptsBody": false,
         "notes": "Platform-level resource - all authenticated users can read pipelines. No organisationId required."
-      }
+      },
+      "serviceFile": "server/services/processingPipelines.service.ts"
     },
     {
       "path": "/api/processing-pipelines/:id",
       "method": "GET",
       "status": "required",
       "routeFile": "server/routes/processingPipelines.routes.ts",
-      "middleware": ["requireAuth"],
+      "middleware": [
+        "requireAuth"
+      ],
       "authentication": "required",
       "serviceContract": {
         "serviceName": "processingPipelinesService",
         "method": "getProcessingPipelineById",
-        "args": ["req.params.id"],
+        "args": [
+          "req.params.id"
+        ],
         "returns": "ProcessingPipeline",
         "authRequired": true,
         "rbac": null,
         "fileUpload": false,
         "acceptsBody": false,
         "notes": "Platform-level resource - no tenant scoping required"
-      }
+      },
+      "serviceFile": "server/services/processingPipelines.service.ts"
     },
     {
       "path": "/api/processing-pipelines",
       "method": "POST",
       "status": "deferred",
       "routeFile": "server/routes/processingPipelines.routes.ts",
-      "middleware": ["requireAuth", "requireRole", "validateBody"],
+      "middleware": [
+        "requireAuth",
+        "requireRole",
+        "validateBody"
+      ],
       "authentication": "required",
       "serviceContract": {
         "serviceName": "processingPipelinesService",
         "method": "createProcessingPipeline",
-        "args": ["req.body.name", "req.body.version", "req.body.stageConfiguration", "req.body.isDefault"],
+        "args": [
+          "req.body.name",
+          "req.body.version",
+          "req.body.stageConfiguration",
+          "req.body.isDefault"
+        ],
         "returns": "ProcessingPipeline",
         "authRequired": true,
         "rbac": "admin",
         "fileUpload": false,
         "acceptsBody": true,
         "notes": "DEFERRED: MVP uses pre-configured processing pipelines. Pipeline creation deferred to marketplace phase per scope-manifest."
+      },
+      "serviceFile": "server/services/processingPipelines.service.ts",
+      "requestBody": {
+        "contentType": "application/json",
+        "schema": {
+          "name": "string",
+          "steps": "json"
+        },
+        "required": [
+          "name",
+          "steps"
+        ]
       }
     },
     {
@@ -615,18 +969,36 @@
       "method": "PATCH",
       "status": "deferred",
       "routeFile": "server/routes/processingPipelines.routes.ts",
-      "middleware": ["requireAuth", "requireRole", "validateBody"],
+      "middleware": [
+        "requireAuth",
+        "requireRole",
+        "validateBody"
+      ],
       "authentication": "required",
       "serviceContract": {
         "serviceName": "processingPipelinesService",
         "method": "updateProcessingPipeline",
-        "args": ["req.params.id", "req.body.name", "req.body.stageConfiguration", "req.body.isDefault"],
+        "args": [
+          "req.params.id",
+          "req.body.name",
+          "req.body.stageConfiguration",
+          "req.body.isDefault"
+        ],
         "returns": "ProcessingPipeline",
         "authRequired": true,
         "rbac": "admin",
         "fileUpload": false,
         "acceptsBody": true,
         "notes": "DEFERRED: Pipeline mutation deferred to marketplace phase"
+      },
+      "serviceFile": "server/services/processingPipelines.service.ts",
+      "requestBody": {
+        "contentType": "application/json",
+        "schema": {
+          "name": "string",
+          "steps": "json"
+        },
+        "required": []
       }
     },
     {
@@ -634,37 +1006,62 @@
       "method": "DELETE",
       "status": "deferred",
       "routeFile": "server/routes/processingPipelines.routes.ts",
-      "middleware": ["requireAuth", "requireRole"],
+      "middleware": [
+        "requireAuth",
+        "requireRole"
+      ],
       "authentication": "required",
       "serviceContract": {
         "serviceName": "processingPipelinesService",
         "method": "deleteProcessingPipeline",
-        "args": ["req.params.id"],
+        "args": [
+          "req.params.id"
+        ],
         "returns": "void",
         "authRequired": true,
         "rbac": "admin",
         "fileUpload": false,
         "acceptsBody": false,
         "notes": "DEFERRED: Pipeline deletion deferred to marketplace phase"
-      }
+      },
+      "serviceFile": "server/services/processingPipelines.service.ts"
     },
     {
       "path": "/api/projects/:projectId/processing-jobs",
       "method": "POST",
       "status": "required",
       "routeFile": "server/routes/processingJobs.routes.ts",
-      "middleware": ["requireAuth", "validateProjectAccess", "validateBody"],
+      "middleware": [
+        "requireAuth",
+        "validateProjectAccess",
+        "validateBody"
+      ],
       "authentication": "required",
       "serviceContract": {
         "serviceName": "processingJobsService",
         "method": "createProcessingJob",
-        "args": ["req.user.organisationId", "req.params.projectId", "req.body.dataSourceIds", "req.user.id"],
+        "args": [
+          "req.user.organisationId",
+          "req.params.projectId",
+          "req.body.dataSourceIds",
+          "req.user.id"
+        ],
         "returns": "ProcessingJob",
         "authRequired": true,
         "rbac": null,
         "fileUpload": false,
         "acceptsBody": true,
         "notes": "Project-scoped job creation. Middleware validates project belongs to user's organisation."
+      },
+      "serviceFile": "server/services/processingJobs.service.ts",
+      "requestBody": {
+        "contentType": "application/json",
+        "schema": {
+          "processingPipelineId": "string"
+        },
+        "required": [
+          "processingPipelineId"
+        ]
       }
     },
     {
@@ -672,140 +1069,198 @@
       "method": "GET",
       "status": "required",
       "routeFile": "server/routes/processingJobs.routes.ts",
-      "middleware": ["requireAuth", "validateProjectAccess"],
+      "middleware": [
+        "requireAuth",
+        "validateProjectAccess"
+      ],
       "authentication": "required",
       "serviceContract": {
         "serviceName": "processingJobsService",
         "method": "listProcessingJobs",
-        "args": ["req.user.organisationId", "req.params.projectId", "req.query.status"],
+        "args": [
+          "req.user.organisationId",
+          "req.params.projectId",
+          "req.query.status"
+        ],
         "returns": "ProcessingJob[]",
         "authRequired": true,
         "rbac": null,
         "fileUpload": false,
         "acceptsBody": false,
         "notes": "Project-scoped job listing with optional status filter"
-      }
+      },
+      "serviceFile": "server/services/processingJobs.service.ts"
     },
     {
       "path": "/api/projects/:projectId/processing-jobs/:id",
       "method": "GET",
       "status": "required",
       "routeFile": "server/routes/processingJobs.routes.ts",
-      "middleware": ["requireAuth", "validateProjectAccess"],
+      "middleware": [
+        "requireAuth",
+        "validateProjectAccess"
+      ],
       "authentication": "required",
       "serviceContract": {
         "serviceName": "processingJobsService",
         "method": "getProcessingJobById",
-        "args": ["req.user.organisationId", "req.params.projectId", "req.params.id"],
+        "args": [
+          "req.user.organisationId",
+          "req.params.projectId",
+          "req.params.id"
+        ],
         "returns": "ProcessingJob",
         "authRequired": true,
         "rbac": null,
         "fileUpload": false,
         "acceptsBody": false,
         "notes": "Project-scoped job retrieval"
-      }
+      },
+      "serviceFile": "server/services/processingJobs.service.ts"
     },
     {
       "path": "/api/projects/:projectId/processing-jobs/:id/retry",
       "method": "POST",
       "status": "required",
       "routeFile": "server/routes/processingJobs.routes.ts",
-      "middleware": ["requireAuth", "validateProjectAccess"],
+      "middleware": [
+        "requireAuth",
+        "validateProjectAccess"
+      ],
       "authentication": "required",
       "serviceContract": {
         "serviceName": "processingJobsService",
         "method": "retryProcessingJob",
-        "args": ["req.user.organisationId", "req.params.projectId", "req.params.id"],
+        "args": [
+          "req.user.organisationId",
+          "req.params.projectId",
+          "req.params.id"
+        ],
         "returns": "ProcessingJob",
         "authRequired": true,
         "rbac": null,
         "fileUpload": false,
         "acceptsBody": false,
         "notes": "Retry failed processing job - creates new job with same configuration"
-      }
+      },
+      "serviceFile": "server/services/processingJobs.service.ts"
     },
     {
       "path": "/api/projects/:projectId/datasets",
       "method": "GET",
       "status": "required",
       "routeFile": "server/routes/datasets.routes.ts",
-      "middleware": ["requireAuth", "validateProjectAccess"],
+      "middleware": [
+        "requireAuth",
+        "validateProjectAccess"
+      ],
       "authentication": "required",
       "serviceContract": {
         "serviceName": "datasetsService",
         "method": "listDatasets",
-        "args": ["req.user.organisationId", "req.params.projectId"],
+        "args": [
+          "req.user.organisationId",
+          "req.params.projectId"
+        ],
         "returns": "Dataset[]",
         "authRequired": true,
         "rbac": null,
         "fileUpload": false,
         "acceptsBody": false,
         "notes": "Project-scoped dataset listing"
-      }
+      },
+      "serviceFile": "server/services/datasets.service.ts"
     },
     {
       "path": "/api/projects/:projectId/datasets/:id",
       "method": "GET",
       "status": "required",
       "routeFile": "server/routes/datasets.routes.ts",
-      "middleware": ["requireAuth", "validateProjectAccess"],
+      "middleware": [
+        "requireAuth",
+        "validateProjectAccess"
+      ],
       "authentication": "required",
       "serviceContract": {
         "serviceName": "datasetsService",
         "method": "getDatasetById",
-        "args": ["req.user.organisationId", "req.params.projectId", "req.params.id"],
+        "args": [
+          "req.user.organisationId",
+          "req.params.projectId",
+          "req.params.id"
+        ],
         "returns": "Dataset",
         "authRequired": true,
         "rbac": null,
         "fileUpload": false,
         "acceptsBody": false,
         "notes": "Project-scoped dataset retrieval"
-      }
+      },
+      "serviceFile": "server/services/datasets.service.ts"
     },
     {
       "path": "/api/projects/:projectId/datasets/:id/download",
       "method": "GET",
       "status": "required",
       "routeFile": "server/routes/datasets.routes.ts",
-      "middleware": ["requireAuth", "validateProjectAccess"],
+      "middleware": [
+        "requireAuth",
+        "validateProjectAccess"
+      ],
       "authentication": "required",
       "serviceContract": {
         "serviceName": "datasetsService",
         "method": "downloadDataset",
-        "args": ["req.user.organisationId", "req.params.projectId", "req.params.id", "req.query.format"],
+        "args": [
+          "req.user.organisationId",
+          "req.params.projectId",
+          "req.params.id",
+          "req.query.format"
+        ],
         "returns": "FileDownloadResponse",
         "authRequired": true,
         "rbac": null,
         "fileUpload": false,
         "acceptsBody": false,
         "notes": "Download dataset in specified format (JSONL, JSON). Download-only export per scope-manifest."
-      }
+      },
+      "serviceFile": "server/services/datasets.service.ts"
     },
     {
       "path": "/api/projects/:projectId/datasets/:id",
       "method": "DELETE",
       "status": "required",
       "routeFile": "server/routes/datasets.routes.ts",
-      "middleware": ["requireAuth", "validateProjectAccess"],
+      "middleware": [
+        "requireAuth",
+        "validateProjectAccess"
+      ],
       "authentication": "required",
       "serviceContract": {
         "serviceName": "datasetsService",
         "method": "deleteDataset",
-        "args": ["req.user.organisationId", "req.params.projectId", "req.params.id"],
+        "args": [
+          "req.user.organisationId",
+          "req.params.projectId",
+          "req.params.id"
+        ],
         "returns": "void",
         "authRequired": true,
         "rbac": null,
         "fileUpload": false,
         "acceptsBody": false,
         "notes": "Project-scoped dataset deletion"
-      }
+      },
+      "serviceFile": "server/services/datasets.service.ts"
     },
     {
       "path": "/api/api-connectors",
       "method": "GET",
       "status": "required",
       "routeFile": "server/routes/apiConnectors.routes.ts",
-      "middleware": ["requireAuth"],
+      "middleware": [
+        "requireAuth"
+      ],
       "authentication": "required",
       "serviceContract": {
         "serviceName": "apiConnectorsService",
@@ -817,44 +1272,72 @@
         "fileUpload": false,
         "acceptsBody": false,
         "notes": "Platform-level resource - all authenticated users can read connectors. No organisationId required."
-      }
+      },
+      "serviceFile": "server/services/apiConnectors.service.ts"
     },
     {
       "path": "/api/api-connectors/:id",
       "method": "GET",
       "status": "required",
       "routeFile": "server/routes/apiConnectors.routes.ts",
-      "middleware": ["requireAuth"],
+      "middleware": [
+        "requireAuth"
+      ],
       "authentication": "required",
       "serviceContract": {
         "serviceName": "apiConnectorsService",
         "method": "getApiConnectorById",
-        "args": ["req.params.id"],
+        "args": [
+          "req.params.id"
+        ],
         "returns": "ApiConnector",
         "authRequired": true,
         "rbac": null,
         "fileUpload": false,
         "acceptsBody": false,
         "notes": "Platform-level resource - no tenant scoping required"
-      }
+      },
+      "serviceFile": "server/services/apiConnectors.service.ts"
     },
     {
       "path": "/api/api-connectors",
       "method": "POST",
       "status": "deferred",
       "routeFile": "server/routes/apiConnectors.routes.ts",
-      "middleware": ["requireAuth", "requireRole", "validateBody"],
+      "middleware": [
+        "requireAuth",
+        "requireRole",
+        "validateBody"
+      ],
       "authentication": "required",
       "serviceContract": {
         "serviceName": "apiConnectorsService",
         "method": "createApiConnector",
-        "args": ["req.body.name", "req.body.provider", "req.body.authMethod", "req.body.configSchema"],
+        "args": [
+          "req.body.name",
+          "req.body.provider",
+          "req.body.authMethod",
+          "req.body.configSchema"
+        ],
         "returns": "ApiConnector",
         "authRequired": true,
         "rbac": "admin",
         "fileUpload": false,
         "acceptsBody": true,
         "notes": "DEFERRED: Connector creation deferred to marketplace phase - MVP includes pre-built Teamwork Desk connector"
+      },
+      "serviceFile": "server/services/apiConnectors.service.ts",
+      "requestBody": {
+        "contentType": "application/json",
+        "schema": {
+          "name": "string",
+          "type": "string",
+          "config": "json"
+        },
+        "required": [
+          "name",
+          "type"
+        ]
       }
     },
     {
@@ -862,18 +1345,36 @@
       "method": "PATCH",
       "status": "deferred",
       "routeFile": "server/routes/apiConnectors.routes.ts",
-      "middleware": ["requireAuth", "requireRole", "validateBody"],
+      "middleware": [
+        "requireAuth",
+        "requireRole",
+        "validateBody"
+      ],
       "authentication": "required",
       "serviceContract": {
         "serviceName": "apiConnectorsService",
         "method": "updateApiConnector",
-        "args": ["req.params.id", "req.body.name", "req.body.authMethod", "req.body.configSchema"],
+        "args": [
+          "req.params.id",
+          "req.body.name",
+          "req.body.authMethod",
+          "req.body.configSchema"
+        ],
         "returns": "ApiConnector",
         "authRequired": true,
         "rbac": "admin",
         "fileUpload": false,
         "acceptsBody": true,
         "notes": "DEFERRED: Connector mutation deferred to marketplace phase"
+      },
+      "serviceFile": "server/services/apiConnectors.service.ts",
+      "requestBody": {
+        "contentType": "application/json",
+        "schema": {
+          "name": "string",
+          "config": "json"
+        },
+        "required": []
       }
     },
     {
@@ -881,37 +1382,61 @@
       "method": "DELETE",
       "status": "deferred",
       "routeFile": "server/routes/apiConnectors.routes.ts",
-      "middleware": ["requireAuth", "requireRole"],
+      "middleware": [
+        "requireAuth",
+        "requireRole"
+      ],
       "authentication": "required",
       "serviceContract": {
         "serviceName": "apiConnectorsService",
         "method": "deleteApiConnector",
-        "args": ["req.params.id"],
+        "args": [
+          "req.params.id"
+        ],
         "returns": "void",
         "authRequired": true,
         "rbac": "admin",
         "fileUpload": false,
         "acceptsBody": false,
         "notes": "DEFERRED: Connector deletion deferred to marketplace phase"
-      }
+      },
+      "serviceFile": "server/services/apiConnectors.service.ts"
     },
     {
       "path": "/api/projects/:projectId/data-sources",
       "method": "POST",
       "status": "required",
       "routeFile": "server/routes/projectDataSources.routes.ts",
-      "middleware": ["requireAuth", "validateProjectAccess", "validateBody"],
+      "middleware": [
+        "requireAuth",
+        "validateProjectAccess",
+        "validateBody"
+      ],
       "authentication": "required",
       "serviceContract": {
         "serviceName": "projectDataSourcesService",
         "method": "addDataSourceToProject",
-        "args": ["req.user.organisationId", "req.params.projectId", "req.body.dataSourceId"],
+        "args": [
+          "req.user.organisationId",
+          "req.params.projectId",
+          "req.body.dataSourceId"
+        ],
         "returns": "ProjectDataSource",
         "authRequired": true,
         "rbac": null,
         "fileUpload": false,
         "acceptsBody": true,
         "notes": "Associate existing data source with project - project-scoped junction table"
+      },
+      "serviceFile": "server/services/projectDataSources.service.ts",
+      "requestBody": {
+        "contentType": "application/json",
+        "schema": {
+          "dataSourceId": "string"
+        },
+        "required": [
+          "dataSourceId"
+        ]
       }
     },
     {
@@ -919,38 +1444,53 @@
       "method": "GET",
       "status": "required",
       "routeFile": "server/routes/projectDataSources.routes.ts",
-      "middleware": ["requireAuth", "validateProjectAccess"],
+      "middleware": [
+        "requireAuth",
+        "validateProjectAccess"
+      ],
       "authentication": "required",
       "serviceContract": {
         "serviceName": "projectDataSourcesService",
         "method": "listProjectDataSources",
-        "args": ["req.user.organisationId", "req.params.projectId"],
+        "args": [
+          "req.user.organisationId",
+          "req.params.projectId"
+        ],
         "returns": "ProjectDataSource[]",
         "authRequired": true,
         "rbac": null,
         "fileUpload": false,
         "acceptsBody": false,
         "notes": "List data sources associated with project"
-      }
+      },
+      "serviceFile": "server/services/projectDataSources.service.ts"
     },
     {
       "path": "/api/projects/:projectId/data-sources/:id",
       "method": "DELETE",
       "status": "required",
       "routeFile": "server/routes/projectDataSources.routes.ts",
-      "middleware": ["requireAuth", "validateProjectAccess"],
+      "middleware": [
+        "requireAuth",
+        "validateProjectAccess"
+      ],
       "authentication": "required",
       "serviceContract": {
         "serviceName": "projectDataSourcesService",
         "method": "removeDataSourceFromProject",
-        "args": ["req.user.organisationId", "req.params.projectId", "req.params.id"],
+        "args": [
+          "req.user.organisationId",
+          "req.params.projectId",
+          "req.params.id"
+        ],
         "returns": "void",
         "authRequired": true,
         "rbac": null,
         "fileUpload": false,
         "acceptsBody": false,
         "notes": "Remove data source association from project"
-      }
+      },
+      "serviceFile": "server/services/projectDataSources.service.ts"
     }
   ],
   "fileUploadConfig": {

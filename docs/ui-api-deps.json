@@ -15,11 +15,12 @@
       "apiCalls": [
         {
           "method": "POST",
-          "path": "/api/auth/login",
           "required": true,
-          "authRequired": false
+          "authRequired": false,
+          "endpoint": "/api/auth/login"
         }
-      ]
+      ],
+      "path": "/login"
     },
     {
       "filePath": "client/src/pages/DashboardPage.tsx",
@@ -30,18 +31,22 @@
       "apiCalls": [
         {
           "method": "GET",
-          "path": "/api/auth/session",
           "required": true,
-          "authRequired": true
+          "authRequired": true,
+          "endpoint": "/api/auth/session"
         },
         {
           "method": "GET",
-          "path": "/api/projects",
           "required": true,
           "authRequired": true,
-          "queryParams": ["status", "limit"]
+          "queryParams": [
+            "status",
+            "limit"
+          ],
+          "endpoint": "/api/projects"
         }
-      ]
+      ],
+      "path": "/"
     },
     {
       "filePath": "client/src/pages/ProjectsPage.tsx",
@@ -52,25 +57,31 @@
       "apiCalls": [
         {
           "method": "GET",
-          "path": "/api/projects",
           "required": true,
           "authRequired": true,
-          "queryParams": ["status", "orderBy"]
+          "queryParams": [
+            "status",
+            "orderBy"
+          ],
+          "endpoint": "/api/projects"
         },
         {
           "method": "POST",
-          "path": "/api/projects",
           "required": true,
-          "authRequired": true
+          "authRequired": true,
+          "endpoint": "/api/projects"
         },
         {
           "method": "DELETE",
-          "path": "/api/projects/:id",
           "required": true,
           "authRequired": true,
-          "paramSource": {"id": "selected project row"}
+          "paramSource": {
+            "id": "selected project row"
+          },
+          "endpoint": "/api/projects/:id"
         }
-      ]
+      ],
+      "path": "/projects"
     },
     {
       "filePath": "client/src/pages/ProjectPage.tsx",
@@ -80,36 +91,40 @@
       "apiCalls": [
         {
           "method": "GET",
-          "path": "/api/projects/:projectId",
           "required": true,
-          "authRequired": true
+          "authRequired": true,
+          "endpoint": "/api/projects/:projectId"
         },
         {
           "method": "PATCH",
-          "path": "/api/projects/:projectId",
-          "required": true,
-          "authRequired": true
-        },
-        {
-          "method": "GET",
-          "path": "/api/projects/:projectId/data-sources",
-          "required": true,
-          "authRequired": true
-        },
-        {
-          "method": "GET",
-          "path": "/api/projects/:projectId/processing-jobs",
           "required": true,
           "authRequired": true,
-          "queryParams": ["status", "orderBy"]
+          "endpoint": "/api/projects/:projectId"
         },
         {
           "method": "GET",
-          "path": "/api/projects/:projectId/datasets",
           "required": true,
-          "authRequired": true
+          "authRequired": true,
+          "endpoint": "/api/projects/:projectId/data-sources"
+        },
+        {
+          "method": "GET",
+          "required": true,
+          "authRequired": true,
+          "queryParams": [
+            "status",
+            "orderBy"
+          ],
+          "endpoint": "/api/projects/:projectId/processing-jobs"
+        },
+        {
+          "method": "GET",
+          "required": true,
+          "authRequired": true,
+          "endpoint": "/api/projects/:projectId/datasets"
         }
-      ]
+      ],
+      "path": "/projects/:projectId"
     },
     {
       "filePath": "client/src/pages/NewProjectPage.tsx",
@@ -120,18 +135,19 @@
       "apiCalls": [
         {
           "method": "POST",
-          "path": "/api/projects",
           "required": true,
-          "authRequired": true
+          "authRequired": true,
+          "endpoint": "/api/projects"
         },
         {
           "method": "GET",
-          "path": "/api/canonical-schemas",
           "required": true,
           "authRequired": true,
-          "notes": "Platform-level resource for schema selection during project creation"
+          "notes": "Platform-level resource for schema selection during project creation",
+          "endpoint": "/api/canonical-schemas"
         }
-      ]
+      ],
+      "path": "/projects/new"
     },
     {
       "filePath": "client/src/pages/ProjectSourcesPage.tsx",
@@ -142,43 +158,46 @@
       "apiCalls": [
         {
           "method": "GET",
-          "path": "/api/projects/:projectId/data-sources",
           "required": true,
-          "authRequired": true
+          "authRequired": true,
+          "endpoint": "/api/projects/:projectId/data-sources"
         },
         {
           "method": "POST",
-          "path": "/api/projects/:projectId/data-sources",
           "required": true,
-          "authRequired": true
+          "authRequired": true,
+          "endpoint": "/api/projects/:projectId/data-sources"
         },
         {
           "method": "DELETE",
-          "path": "/api/projects/:projectId/data-sources/:id",
           "required": true,
           "authRequired": true,
-          "paramSource": {"id": "selected data source row"}
+          "paramSource": {
+            "id": "selected data source row"
+          },
+          "endpoint": "/api/projects/:projectId/data-sources/:id"
         },
         {
           "method": "GET",
-          "path": "/api/data-sources",
           "required": true,
-          "authRequired": true
+          "authRequired": true,
+          "endpoint": "/api/data-sources"
         },
         {
           "method": "POST",
-          "path": "/api/data-sources",
           "required": true,
-          "authRequired": true
+          "authRequired": true,
+          "endpoint": "/api/data-sources"
         },
         {
           "method": "GET",
-          "path": "/api/api-connectors",
           "required": true,
           "authRequired": true,
-          "notes": "Platform-level resource for API connector selection"
+          "notes": "Platform-level resource for API connector selection",
+          "endpoint": "/api/api-connectors"
         }
-      ]
+      ],
+      "path": "/projects/:projectId/sources"
     },
     {
       "filePath": "client/src/pages/SourceMappingPage.tsx",
@@ -189,38 +208,44 @@
       "apiCalls": [
         {
           "method": "GET",
-          "path": "/api/data-sources/:dataSourceId",
           "required": true,
-          "authRequired": true
+          "authRequired": true,
+          "endpoint": "/api/data-sources/:dataSourceId"
         },
         {
           "method": "GET",
-          "path": "/api/data-sources/:dataSourceId/preview",
           "required": true,
           "authRequired": true,
-          "queryParams": ["rows", "columns"]
+          "queryParams": [
+            "rows",
+            "columns"
+          ],
+          "endpoint": "/api/data-sources/:dataSourceId/preview"
         },
         {
           "method": "GET",
-          "path": "/api/canonical-schemas",
           "required": true,
           "authRequired": true,
-          "notes": "Platform-level resource for schema mapping"
+          "notes": "Platform-level resource for schema mapping",
+          "endpoint": "/api/canonical-schemas"
         },
         {
           "method": "GET",
-          "path": "/api/canonical-schemas/:id",
           "required": true,
           "authRequired": true,
-          "paramSource": {"id": "selected schema from dropdown"}
+          "paramSource": {
+            "id": "selected schema from dropdown"
+          },
+          "endpoint": "/api/canonical-schemas/:id"
         },
         {
           "method": "PATCH",
-          "path": "/api/data-sources/:dataSourceId",
           "required": true,
-          "authRequired": true
+          "authRequired": true,
+          "endpoint": "/api/data-sources/:dataSourceId"
         }
-      ]
+      ],
+      "path": "/projects/:projectId/sources/:dataSourceId/mapping"
     },
     {
       "filePath": "client/src/pages/SourcePreviewPage.tsx",
@@ -231,24 +256,28 @@
       "apiCalls": [
         {
           "method": "GET",
-          "path": "/api/data-sources/:dataSourceId",
           "required": true,
-          "authRequired": true
+          "authRequired": true,
+          "endpoint": "/api/data-sources/:dataSourceId"
         },
         {
           "method": "GET",
-          "path": "/api/data-sources/:dataSourceId/preview",
           "required": true,
           "authRequired": true,
-          "queryParams": ["deIdentificationConfig", "rows"]
+          "queryParams": [
+            "deIdentificationConfig",
+            "rows"
+          ],
+          "endpoint": "/api/data-sources/:dataSourceId/preview"
         },
         {
           "method": "PATCH",
-          "path": "/api/data-sources/:dataSourceId",
           "required": true,
-          "authRequired": true
+          "authRequired": true,
+          "endpoint": "/api/data-sources/:dataSourceId"
         }
-      ]
+      ],
+      "path": "/projects/:projectId/sources/:dataSourceId/preview"
     },
     {
       "filePath": "client/src/pages/ProjectProcessingPage.tsx",
@@ -259,32 +288,38 @@
       "apiCalls": [
         {
           "method": "GET",
-          "path": "/api/projects/:projectId/processing-jobs",
           "required": true,
           "authRequired": true,
-          "queryParams": ["status", "orderBy"]
+          "queryParams": [
+            "status",
+            "orderBy"
+          ],
+          "endpoint": "/api/projects/:projectId/processing-jobs"
         },
         {
           "method": "POST",
-          "path": "/api/projects/:projectId/processing-jobs",
           "required": true,
-          "authRequired": true
+          "authRequired": true,
+          "endpoint": "/api/projects/:projectId/processing-jobs"
         },
         {
           "method": "GET",
-          "path": "/api/projects/:projectId/processing-jobs/:id",
           "required": true,
           "authRequired": true,
-          "paramSource": {"id": "selected processing job row"}
+          "paramSource": {
+            "id": "selected processing job row"
+          },
+          "endpoint": "/api/projects/:projectId/processing-jobs/:id"
         },
         {
           "method": "GET",
-          "path": "/api/processing-pipelines",
           "required": true,
           "authRequired": true,
-          "notes": "Platform-level resource for pipeline selection"
+          "notes": "Platform-level resource for pipeline selection",
+          "endpoint": "/api/processing-pipelines"
         }
-      ]
+      ],
+      "path": "/projects/:projectId/processing"
     },
     {
       "filePath": "client/src/pages/DatasetExportPage.tsx",
@@ -295,33 +330,42 @@
       "apiCalls": [
         {
           "method": "GET",
-          "path": "/api/projects/:projectId/datasets",
           "required": true,
-          "authRequired": true
+          "authRequired": true,
+          "endpoint": "/api/projects/:projectId/datasets"
         },
         {
           "method": "GET",
-          "path": "/api/projects/:projectId/datasets/:id",
           "required": true,
           "authRequired": true,
-          "paramSource": {"id": "selected dataset row"}
+          "paramSource": {
+            "id": "selected dataset row"
+          },
+          "endpoint": "/api/projects/:projectId/datasets/:id"
         },
         {
           "method": "GET",
-          "path": "/api/projects/:projectId/datasets/:id/download",
           "required": true,
           "authRequired": true,
-          "paramSource": {"id": "selected dataset row"},
-          "queryParams": ["format"]
+          "paramSource": {
+            "id": "selected dataset row"
+          },
+          "queryParams": [
+            "format"
+          ],
+          "endpoint": "/api/projects/:projectId/datasets/:id/download"
         },
         {
           "method": "DELETE",
-          "path": "/api/projects/:projectId/datasets/:id",
           "required": true,
           "authRequired": true,
-          "paramSource": {"id": "selected dataset row"}
+          "paramSource": {
+            "id": "selected dataset row"
+          },
+          "endpoint": "/api/projects/:projectId/datasets/:id"
         }
-      ]
+      ],
+      "path": "/projects/:projectId/datasets"
     },
     {
       "filePath": "client/src/pages/DataSourcesPage.tsx",
@@ -332,39 +376,49 @@
       "apiCalls": [
         {
           "method": "GET",
-          "path": "/api/data-sources",
           "required": true,
           "authRequired": true,
-          "queryParams": ["type", "status"]
+          "queryParams": [
+            "type",
+            "status"
+          ],
+          "endpoint": "/api/data-sources"
         },
         {
           "method": "POST",
-          "path": "/api/data-sources",
           "required": true,
-          "authRequired": true
+          "authRequired": true,
+          "endpoint": "/api/data-sources"
         },
         {
           "method": "GET",
-          "path": "/api/data-sources/:id",
           "required": true,
           "authRequired": true,
-          "paramSource": {"id": "selected data source row"}
+          "paramSource": {
+            "id": "selected data source row"
+          },
+          "endpoint": "/api/data-sources/:id"
         },
         {
           "method": "PATCH",
-          "path": "/api/data-sources/:id",
           "required": true,
           "authRequired": true,
-          "paramSource": {"id": "selected data source row"}
+          "paramSource": {
+            "id": "selected data source row"
+          },
+          "endpoint": "/api/data-sources/:id"
         },
         {
           "method": "DELETE",
-          "path": "/api/data-sources/:id",
           "required": true,
           "authRequired": true,
-          "paramSource": {"id": "selected data source row"}
+          "paramSource": {
+            "id": "selected data source row"
+          },
+          "endpoint": "/api/data-sources/:id"
         }
-      ]
+      ],
+      "path": "/data-sources"
     },
     {
       "filePath": "client/src/pages/NewDataSourcePage.tsx",
@@ -374,26 +428,29 @@
       "apiCalls": [
         {
           "method": "POST",
-          "path": "/api/data-sources",
           "required": true,
-          "authRequired": true
+          "authRequired": true,
+          "endpoint": "/api/data-sources"
         },
         {
           "method": "GET",
-          "path": "/api/api-connectors",
           "required": true,
           "authRequired": true,
-          "notes": "Platform-level resource for connector selection"
+          "notes": "Platform-level resource for connector selection",
+          "endpoint": "/api/api-connectors"
         },
         {
           "method": "GET",
-          "path": "/api/api-connectors/:id",
           "required": true,
           "authRequired": true,
-          "paramSource": {"id": "selected connector option"},
-          "notes": "Platform-level resource details"
+          "paramSource": {
+            "id": "selected connector option"
+          },
+          "notes": "Platform-level resource details",
+          "endpoint": "/api/api-connectors/:id"
         }
-      ]
+      ],
+      "path": "/data-sources/new"
     },
     {
       "filePath": "client/src/pages/SchemasPage.tsx",
@@ -404,20 +461,23 @@
       "apiCalls": [
         {
           "method": "GET",
-          "path": "/api/canonical-schemas",
           "required": true,
           "authRequired": true,
-          "notes": "Platform-level resource listing"
+          "notes": "Platform-level resource listing",
+          "endpoint": "/api/canonical-schemas"
         },
         {
           "method": "GET",
-          "path": "/api/canonical-schemas/:id",
           "required": true,
           "authRequired": true,
-          "paramSource": {"id": "selected schema row"},
-          "notes": "Platform-level resource details"
+          "paramSource": {
+            "id": "selected schema row"
+          },
+          "notes": "Platform-level resource details",
+          "endpoint": "/api/canonical-schemas/:id"
         }
-      ]
+      ],
+      "path": "/schemas"
     },
     {
       "filePath": "client/src/pages/ConnectorsPage.tsx",
@@ -428,20 +488,23 @@
       "apiCalls": [
         {
           "method": "GET",
-          "path": "/api/api-connectors",
           "required": true,
           "authRequired": true,
-          "notes": "Platform-level resource listing"
+          "notes": "Platform-level resource listing",
+          "endpoint": "/api/api-connectors"
         },
         {
           "method": "GET",
-          "path": "/api/api-connectors/:id",
           "required": true,
           "authRequired": true,
-          "paramSource": {"id": "selected connector row"},
-          "notes": "Platform-level resource details"
+          "paramSource": {
+            "id": "selected connector row"
+          },
+          "notes": "Platform-level resource details",
+          "endpoint": "/api/api-connectors/:id"
         }
-      ]
+      ],
+      "path": "/connectors"
     },
     {
       "filePath": "client/src/pages/UsersPage.tsx",
@@ -452,44 +515,54 @@
       "apiCalls": [
         {
           "method": "GET",
-          "path": "/api/users",
           "required": true,
           "authRequired": true,
           "requiredRole": "admin",
-          "queryParams": ["role", "status"]
+          "queryParams": [
+            "role",
+            "status"
+          ],
+          "endpoint": "/api/users"
         },
         {
           "method": "GET",
-          "path": "/api/users/:id",
           "required": true,
           "authRequired": true,
           "requiredRole": "admin",
-          "paramSource": {"id": "selected user row"}
+          "paramSource": {
+            "id": "selected user row"
+          },
+          "endpoint": "/api/users/:id"
         },
         {
           "method": "POST",
-          "path": "/api/users",
           "required": true,
           "authRequired": true,
-          "requiredRole": "admin"
+          "requiredRole": "admin",
+          "endpoint": "/api/users"
         },
         {
           "method": "PATCH",
-          "path": "/api/users/:id",
           "required": true,
           "authRequired": true,
           "requiredRole": "admin",
-          "paramSource": {"id": "selected user row"}
+          "paramSource": {
+            "id": "selected user row"
+          },
+          "endpoint": "/api/users/:id"
         },
         {
           "method": "DELETE",
-          "path": "/api/users/:id",
           "required": true,
           "authRequired": true,
           "requiredRole": "admin",
-          "paramSource": {"id": "selected user row"}
+          "paramSource": {
+            "id": "selected user row"
+          },
+          "endpoint": "/api/users/:id"
         }
-      ]
+      ],
+      "path": "/admin/users"
     },
     {
       "filePath": "client/src/pages/SettingsPage.tsx",
@@ -500,33 +573,34 @@
       "apiCalls": [
         {
           "method": "GET",
-          "path": "/api/auth/session",
           "required": true,
-          "authRequired": true
+          "authRequired": true,
+          "endpoint": "/api/auth/session"
         },
         {
           "method": "PATCH",
-          "path": "/api/users/:id",
           "required": true,
           "authRequired": true,
           "dependsOn": "/api/auth/session",
-          "notes": "User ID parameter sourced from session response"
+          "notes": "User ID parameter sourced from session response",
+          "endpoint": "/api/users/:id"
         },
         {
           "method": "GET",
-          "path": "/api/organisations/me",
           "required": true,
-          "authRequired": true
+          "authRequired": true,
+          "endpoint": "/api/organisations/me"
         },
         {
           "method": "PATCH",
-          "path": "/api/organisations/me",
           "required": true,
           "authRequired": true,
           "requiredRole": "admin",
-          "notes": "Admin-only organisation name editing per scope manifest business rules"
+          "notes": "Admin-only organisation name editing per scope manifest business rules",
+          "endpoint": "/api/organisations/me"
         }
-      ]
+      ],
+      "path": "/settings"
     }
   ]
 }
